@@ -28,11 +28,13 @@ angular.module('vadowApp')
 		        autoencode: false,
 		        datatype: "xml",
 				height: 200,
-				colNames:['ID','NOMBRE','ESTADO'],
+				colNames:['ID','NOMBRE','ESTADO','VERIFICADOR'],
 				colModel:[
 					{name:'id',index:'id',align:'left',search:false,editable: true, hidden: true, editoptions: {readonly: 'readonly'}},					
 					{name:'nombre',index:'nombre',width:150, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
-					{name:'estado',index:'estado',width:150, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"Activo:Inactivo"}},
+					{name:'estado',index:'estado',width:150, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},					
+					{name:'numeroVerificador',index:'numeroVerificador',frozen : true, hidden: true, align:'left',search:false,width: ''},
+
 					
 				],	
 		        rownumbers: true,
@@ -110,14 +112,9 @@ angular.module('vadowApp')
            			 } else {
 	                	if(retorno == '2') {
 	                		$("#codigo").val("");
-		                	return [false,"Error.. Este código ya esta agregado"];
+		                	return [false,"Error.. Este nombre ya esta agregado"];
 		                }else{	
-		                	if(retorno == '3') {
-		                		$("#nombre").val("");
-			                	return [false,"Error.. Este nombre ya esta agregado"];
-			                }else{
-
-			                }
+		                	
 		                }
 	                }
 	                return [true,'',retorno];
@@ -146,14 +143,9 @@ angular.module('vadowApp')
 	                } else {
 	                	if(retorno == '2') {
 	                		$("#codigo").val("");
-		                	return [false,"Error.. Este código ya esta agregado"];
+		                	return [false,"Error.. Este nombre ya esta agregado"];
 		                }else{	
-		                	if(retorno == '3') {
-		                		$("#nombre").val("");
-			                	return [false,"Error.. Este nombre ya esta agregado"];
-			                }else{
-			                	
-			                }
+		                	
 		                }
 	                }
 	                return [true,'',retorno];
