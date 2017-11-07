@@ -1,8 +1,9 @@
 angular.module('vadowApp')	 			
 	.controller('tipoBienController', function ($scope, $route, $http) {	
-		$scope.$route = $route;	
+		$scope.$route = $route;
+			
 		jQuery(function($) {			
-			$( "#tabTipoBien" ).click(function( event ) {
+			$( "#tabTipoBien" ).click(function(event) {
 				event.preventDefault();  
 			});
 			var grid_selector = "#table";

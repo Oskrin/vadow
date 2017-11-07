@@ -1,4 +1,5 @@
 var app = angular.module('vadowApp', ['ngRoute','localytics.directives']);
+
 app.config(function($routeProvider) {
     $routeProvider        
         .when('/', {

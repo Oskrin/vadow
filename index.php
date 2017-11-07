@@ -1,3 +1,9 @@
+<?php 
+	session_start();
+	if(!$_SESSION) {
+		header('Location: login/');
+	}
+?>
 <!DOCTYPE html>
 <html ng-app="vadowApp" lang="es">
 	<head>
@@ -64,9 +70,11 @@
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav" id="nav">
 						<li class="light-blue dropdown-modal">
-							<a data-toggle="dropdown" href="#" class="dropdown-toggle" id="nav">									
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle" id="nav">
+								<img class="nav-user-photo" src=<?php  print_r('data/usuarios/images/'. $_SESSION['user']['imagen']); ?> alt="" />									
 								<span class="user-info">
-									<small>Bienvenido(a),</small>									
+									<small>Bienvenido(a),</small>
+									<?php  print_r($_SESSION['user']['name']); ?>									
 								</span>
 								<i class="ace-icon fa fa-caret-down"></i>
 							</a>
@@ -159,9 +167,9 @@
 		</div><!-- /.main-container -->
 	
 		<script src="dist/js/angular-chosen.min.js"></script>
-		<script type="text/javascript">
+		<!-- <script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='dist/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-		</script>				
+		</script> -->				
 		<script src="dist/js/bootbox.min.js"></script>
 		<script src="dist/js/bootstrap.min.js"></script>
 		<script src="dist/js/gritter.js"></script>
@@ -171,7 +179,6 @@
 		<script src="dist/js/ace-elements.min.js"></script>		
 		<script src="dist/js/ace.min.js"></script>		
 		<script src="dist/js/moment.min.js"></script>
-		
 		
 		<!--[if lte IE 8]>
 		  <script src="dist/js/excanvas.min.js"></script>
