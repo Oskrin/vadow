@@ -7,12 +7,20 @@ app.config(function($routeProvider) {
             controller  : 'mainController',
             activetab: 'inicio',
             authorize: true
-        })       
+        })  
+         .when('/menu', {
+            templateUrl : 'data/parametros/menu/app.html',
+            controller  : 'menuController',
+            activetab: 'menu',
+            authorize: true
+        })        
         .when('/tipoBien', {
             templateUrl : 'data/inventario/tipoBien/app.html',
             controller  : 'tipoBienController',
             activetab: 'tipoBien',
             authorize: true
-        })          
+        })  
+
+
         .otherwise("/");                               
 })
