@@ -8,12 +8,30 @@ app.config(function($routeProvider) {
             activetab: 'inicio',
             authorize: true
         })  
-         .when('/menu', {
+        .when('/cargos', {
+            templateUrl : 'data/parametros/cargos/app.html',
+            controller  : 'cargosController',
+            activetab: 'cargos',
+            authorize: true
+        })  
+        .when('/menu', {
             templateUrl : 'data/parametros/menu/app.html',
             controller  : 'menuController',
             activetab: 'menu',
             authorize: true
-        })        
+        })   
+        .when('/submenu', {
+            templateUrl : 'data/parametros/submenu/app.html',
+            controller  : 'submenuController',
+            activetab: 'submenu',
+            authorize: true
+        }) 
+        .when('/accesos', {
+            templateUrl : 'data/parametros/accesos/app.html',
+            controller  : 'accesosController',
+            activetab: 'accesos',
+            authorize: true
+        })       
         .when('/tipoBien', {
             templateUrl : 'data/inventario/tipoBien/app.html',
             controller  : 'tipoBienController',

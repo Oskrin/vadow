@@ -1,8 +1,8 @@
 angular.module('vadowApp')	 			
-	.controller('menuController', function ($scope, $route, $http) {	
+	.controller('submenuController', function ($scope, $route, $http) {	
 		$scope.$route = $route;	
 		jQuery(function($) {				
-			$( "#tabMenu" ).click(function( event ) {
+			$( "#tabNiveles" ).click(function( event ) {
 				event.preventDefault();  
 			});
 			var grid_selector = "#table";
@@ -10,7 +10,7 @@ angular.module('vadowApp')
 
 		    //cambiar el tamaño para ajustarse al tamaño de la página
 		    $(window).on('resize.jqGrid', function () {
-		        $(grid_selector).jqGrid('setGridWidth', $("#tabMenu").width() - 10);
+		        $(grid_selector).jqGrid('setGridWidth', $("#tabNiveles").width() - 10);
 		    });
 		    //cambiar el tamaño de la barra lateral collapse/expand
 		    var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -24,17 +24,19 @@ angular.module('vadowApp')
 		    });
 
 		    jQuery(grid_selector).jqGrid({
-		        url: 'data/parametros/menu/appXml.php',
+		        url: 'data/parametros/submenu/appXml.php',
 		        autoencode: false,
 		        datatype: "xml",
 				height: 200,
-				colNames:['ID','NOMBRE MENU','NOMBRE','ESTADO','ICONO'],
+				colNames:['ID','MENÚ', 'ROL','TÍTULO','ESTADO','idMenu'],
 				colModel:[
 					{name:'id',index:'id', frozen:true,align:'left',search:false, editable: true, hidden: true, editoptions: {readonly: 'readonly'}},
-					{name:'nombre',index:'nombre',width:150, editable:true, hidden: false, editoptions:{size:"20", maxlength:"30"}, editrules: {required: true, edithidden:true}},
-					{name:'titulo',index:'titulo',width:150, editable:true, editoptions:{size:"20", maxlength:"50"}, editrules: {required: true}},
-					{name:'estado',index:'estado',width:150, editable:true, hidden: true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},
-					{name:'icono',index:'icono',width:150, editable:true, editoptions:{size:"20", maxlength:"50"}, editrules: {required: true}},				
+					{name:'nombre_menu', index: 'nombre_menu', editable: true, align: 'left', width: '165',hidden: false, search: true, frozen: true, formoptions: {elmsuffix: " (*)"}, editrules: {required: true},edittype:'select',editoptions: {dataUrl: 'data/parametros/submenu/cargarMenu.php'}},   
+					{name:'nombreRol',index:'nombreRol',width:150, editable:true, editoptions:{size:"20", maxlength:"30"}, editrules: {required: true}},				
+					{name:'titulo',index:'titulo',width:150, editable:true, editoptions:{size:"20", maxlength:"30"}, editrules: {required: true}},
+					{name:'estado',index:'estado',width:150, editable:true, hidden: false, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},
+					{name:'idMenu',index:'idMenu',width:150, editable:true, editoptions:{size:"20", maxlength:"30"}, hidden:true},
+
 					
 				],
 		        rownumbers: true,
@@ -56,7 +58,7 @@ angular.module('vadowApp')
 		                enableTooltips(table);
 		            }, 0);
 		        },
-		        editurl: "data/parametros/menu/app.php",		        
+		        editurl: "data/parametros/submenu/app.php",		        
 		    });
 		    $(window).triggerHandler('resize.jqGrid');//cambiar el tamaño para hacer la rejilla conseguir el tamaño correcto
 
@@ -110,11 +112,11 @@ angular.module('vadowApp')
 			                class_name: 'gritter-light'
 			            });
            			 } else {
-	                	if(retorno == '2') {
-	                		$("#nombre").val("");
+	                	if(retorno == '3') {
+	                		$("#nombreRol").val("");
 		                	return [false,"Error.. El nombre ya fue agregado"];
 		                }else{	
-		                	if(retorno == '3') {
+		                	if(retorno == '2') {
 		                		$("#titulo").val("");
 			                	return [false,"Error.. El título ya fue agregado"];
 			                }	
@@ -144,10 +146,14 @@ angular.module('vadowApp')
 			                class_name: 'gritter-light'
 			            });
 	                } else {
-	                	if(retorno == '2') {
-	                		$("#nombre").val("");
+	                	if(retorno == '3') {
+	                		$("#nombreRol").val("");
 		                	return [false,"Error.. El nombre ya fue agregado"];
-		                }else{		                	
+		                }else{	
+		                	if(retorno == '2') {
+		                		$("#titulo").val("");
+			                	return [false,"Error.. El título ya fue agregado"];
+			                }	
 		                }
 	                }
 	                return [true,'',retorno];

@@ -13,7 +13,7 @@
         $sidx = 1;
     
     $count = 0;
-    $resultado = $class->consulta("SELECT  COUNT(*) AS count FROM menu");         
+    $resultado = $class->consulta("SELECT  COUNT(*) AS count from submenu R inner join menu M on R.id_menu = M.id");         
     while ($row = $class->fetch_array($resultado)) {
         $count = $count + $row[0];    
     }    
@@ -29,15 +29,15 @@
         $start = 0;
     
     if ($search == 'false') {
-        $SQL = "SELECT * FROM menu ORDER BY $sidx $sord limit $limit offset $start";
+        $SQL = "select R.id, R.id_menu, R.nombre_rol, R.titulo tituloRol, R.estado, M.titulo from submenu R inner join menu M on R.id_menu = M.id ORDER BY $sidx $sord limit $limit offset $start";
     } else {
         $campo = $_GET['searchField'];
       
         if ($_GET['searchOper'] == 'eq') {
-            $SQL = "SELECT * FROM menu WHERE $campo = '".$_GET['searchString']."' ORDER BY $sidx $sord limit $limit offset $start";
+            $SQL = "select R.id, R.id_menu, R.nombre_rol, R.titulo tituloRol, R.estado, M.titulo from submenu R inner join menu M on R.id_menu = M.id WHERE $campo = '".$_GET['searchString']."' ORDER BY $sidx $sord limit $limit offset $start";
         }         
         if ($_GET['searchOper'] == 'cn') {
-            $SQL = "SELECT * FROM menu WHERE $campo like '%$_GET[searchString]%' ORDER BY $sidx $sord limit $limit offset $start";
+            $SQL = "select R.id, R.id_menu, R.nombre_rol, R.titulo tituloRol, R.estado, M.titulo from submenu R inner join menu M on R.id_menu = M.id WHERE $campo like '%$_GET[searchString]%' ORDER BY $sidx $sord limit $limit offset $start";
         }
     }  
 
@@ -51,15 +51,15 @@
         $s .= "<total>" . $total_pages . "</total>";
         $s .= "<records>" . $count . "</records>";
          while ($row = $class->fetch_array($resultado)) {
-            $s .= "<row id='" . $row[0] . "'>";            
+            $s .= "<row id='" . $row[0] . "'>";
             $s .= "<cell>" . $row[0] . "</cell>";     
-            $s .= "<cell>" . utf8_decode($row[1]) . "</cell>";     
+            $s .= "<cell>" . utf8_decode($row[5]) . "</cell>";                 
             $s .= "<cell>" . utf8_decode($row[2]) . "</cell>";  
-            $s .= "<cell>" . $row[3] . "</cell>";  
+            $s .= "<cell>" . utf8_decode($row[3]) . "</cell>";  
             $s .= "<cell>" . $row[4] . "</cell>";  
-            
+            $s .= "<cell>" . $row[1] . "</cell>";
             $s .= "</row>";
         }
     $s .= "</rows>";
-    echo $s;    
+    echo $s;
 ?>

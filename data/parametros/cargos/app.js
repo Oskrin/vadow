@@ -1,8 +1,8 @@
 angular.module('vadowApp')	 			
-	.controller('menuController', function ($scope, $route, $http) {	
+	.controller('cargosController', function ($scope, $route, $http) {	
 		$scope.$route = $route;	
 		jQuery(function($) {				
-			$( "#tabMenu" ).click(function( event ) {
+			$( "#tabCargos" ).click(function( event ) {
 				event.preventDefault();  
 			});
 			var grid_selector = "#table";
@@ -10,7 +10,7 @@ angular.module('vadowApp')
 
 		    //cambiar el tamaño para ajustarse al tamaño de la página
 		    $(window).on('resize.jqGrid', function () {
-		        $(grid_selector).jqGrid('setGridWidth', $("#tabMenu").width() - 10);
+		        $(grid_selector).jqGrid('setGridWidth', $("#tabCargos").width() - 10);
 		    });
 		    //cambiar el tamaño de la barra lateral collapse/expand
 		    var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -24,17 +24,17 @@ angular.module('vadowApp')
 		    });
 
 		    jQuery(grid_selector).jqGrid({
-		        url: 'data/parametros/menu/appXml.php',
+		        url: 'data/parametros/cargos/appXml.php',
 		        autoencode: false,
 		        datatype: "xml",
 				height: 200,
-				colNames:['ID','NOMBRE MENU','NOMBRE','ESTADO','ICONO'],
+				colNames:['ID','NOMBRE','PRINCIPAL','OBSERVACIONES','ESTADO'],
 				colModel:[
-					{name:'id',index:'id', frozen:true,align:'left',search:false, editable: true, hidden: true, editoptions: {readonly: 'readonly'}},
-					{name:'nombre',index:'nombre',width:150, editable:true, hidden: false, editoptions:{size:"20", maxlength:"30"}, editrules: {required: true, edithidden:true}},
-					{name:'titulo',index:'titulo',width:150, editable:true, editoptions:{size:"20", maxlength:"50"}, editrules: {required: true}},
-					{name:'estado',index:'estado',width:150, editable:true, hidden: true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},
-					{name:'icono',index:'icono',width:150, editable:true, editoptions:{size:"20", maxlength:"50"}, editrules: {required: true}},				
+					{name:'id',index:'id', frozen:true,align:'left',search:false,editable: true, hidden: true, editoptions: {readonly: 'readonly'}},
+					{name:'nombre_cargo',index:'nombre_cargo',width:150, editable:true, editrules: {required: true}},
+					{name:'principal',index:'principal',align:'center',width:30, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"SI:NO"}},
+					{name:'observaciones',index:'observaciones',width:150, editable:true, editrules: {required: false}},
+					{name:'estado',index:'estado',width:150, editable:true, hidden: true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},					
 					
 				],
 		        rownumbers: true,
@@ -56,7 +56,7 @@ angular.module('vadowApp')
 		                enableTooltips(table);
 		            }, 0);
 		        },
-		        editurl: "data/parametros/menu/app.php",		        
+		        editurl: "data/parametros/cargos/app.php",		        
 		    });
 		    $(window).triggerHandler('resize.jqGrid');//cambiar el tamaño para hacer la rejilla conseguir el tamaño correcto
 
@@ -112,12 +112,8 @@ angular.module('vadowApp')
            			 } else {
 	                	if(retorno == '2') {
 	                		$("#nombre").val("");
-		                	return [false,"Error.. El nombre ya fue agregado"];
+		                	return [false,"Error.. El cargo ya fue agregado"];
 		                }else{	
-		                	if(retorno == '3') {
-		                		$("#titulo").val("");
-			                	return [false,"Error.. El título ya fue agregado"];
-			                }	
 		                }
 	                }
 	                return [true,'',retorno];
@@ -146,7 +142,7 @@ angular.module('vadowApp')
 	                } else {
 	                	if(retorno == '2') {
 	                		$("#nombre").val("");
-		                	return [false,"Error.. El nombre ya fue agregado"];
+		                	return [false,"Error.. El cargo ya fue agregado"];
 		                }else{		                	
 		                }
 	                }
