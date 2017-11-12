@@ -31,14 +31,30 @@ app.config(function($routeProvider) {
             controller  : 'accesosController',
             activetab: 'accesos',
             authorize: true
-        })       
+        })
+        .when('/empresa', {
+            templateUrl : 'data/parametros/empresa/app.html',
+            controller  : 'empresaController',
+            activetab: 'empresa',
+            authorize: true
+        })         
         .when('/tipoBien', {
             templateUrl : 'data/inventario/tipoBien/app.html',
             controller  : 'tipoBienController',
             activetab: 'tipoBien',
             authorize: true
-        })  
-
-
+        })
+        .when('/tipoIdentificacion', {
+            templateUrl : 'data/parametros/tipoIdentificacion/app.html',
+            controller  : 'tipoIdentificacionController',
+            activetab: 'tipoIdentificacion',
+            authorize: true
+        })
+        .when('/usuarios', {
+            templateUrl : 'data/parametros/usuarios/app.html',
+            controller  : 'usuariosController',
+            activetab: 'usuarios',
+            authorize: true
+        })
         .otherwise("/");                               
 })

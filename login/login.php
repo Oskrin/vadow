@@ -7,7 +7,7 @@
 
 	if(isset($_POST['consultar_login_user'])) {
 		// sesion empresa
-		$res = $class->consulta("SELECT * FROM empresa WHERE estado = '1'");
+		/*$res = $class->consulta("SELECT * FROM empresa WHERE estado = '1'");
 		while ($row = $class->fetch_array($res)) {
 			$_SESSION['empresaVadow'] = array(	'id'=>$row[0], 
 												'ruc' => $row[1],
@@ -24,7 +24,7 @@
 												'correo' => $row[14],
 												'slogan' => $row[16],
 												'imagen' => $row[17]);
-		}
+		}*/
 		// fin
 
 		$resultado = $class->consulta("

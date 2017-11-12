@@ -16,4 +16,10 @@
         $texto = substr($texto, 0,$cant);       
         return $texto;
     }
+     function numeroVerificador ($exclusion){
+        do {
+            $n = rand(1,100);
+        }while(in_array($n, array($exclusion)));
+        return $n;
+    }  
 ?>
