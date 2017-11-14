@@ -40,26 +40,24 @@
             $SQL = "SELECT * FROM menu WHERE $campo like '%$_GET[searchString]%' ORDER BY $sidx $sord limit $limit offset $start";
         }
     }  
-
-         
+  
     $resultado = $class->consulta($SQL); 
-    $s ='';
     header("Content-Type: text/html;charset=utf-8");   
     $s = "<?xml version='1.0' encoding='utf-8'?>";
     $s .= "<rows>";
-        $s .= "<page>" . $page . "</page>";
-        $s .= "<total>" . $total_pages . "</total>";
-        $s .= "<records>" . $count . "</records>";
-         while ($row = $class->fetch_array($resultado)) {
-            $s .= "<row id='" . $row[0] . "'>";            
-            $s .= "<cell>" . $row[0] . "</cell>";     
-            $s .= "<cell>" . utf8_decode($row[1]) . "</cell>";     
-            $s .= "<cell>" . utf8_decode($row[2]) . "</cell>";  
-            $s .= "<cell>" . $row[3] . "</cell>";  
-            $s .= "<cell>" . $row[4] . "</cell>";  
-            
-            $s .= "</row>";
-        }
+    $s .= "<page>" . $page . "</page>";
+    $s .= "<total>" . $total_pages . "</total>";
+    $s .= "<records>" . $count . "</records>";
+     while ($row = $class->fetch_array($resultado)) {
+        $s .= "<row id='" . $row[0] . "'>";            
+        $s .= "<cell>" . $row[0] . "</cell>";     
+        $s .= "<cell>" . utf8_decode($row[1]) . "</cell>";     
+        $s .= "<cell>" . utf8_decode($row[2]) . "</cell>";  
+        $s .= "<cell>" . $row[3] . "</cell>";  
+        $s .= "<cell>" . $row[4] . "</cell>";  
+        $s .= "</row>";
+    }
     $s .= "</rows>";
+
     echo $s;    
 ?>

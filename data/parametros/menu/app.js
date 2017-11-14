@@ -27,29 +27,28 @@ angular.module('vadowApp')
 		        url: 'data/parametros/menu/appXml.php',
 		        autoencode: false,
 		        datatype: "xml",
-				height: 200,
-				colNames:['ID','NOMBRE MENU','NOMBRE','ESTADO','ICONO'],
+				height: 320,
+				colNames:['ID','NOMBRE MENU','NOMBRE','ICONO','ESTADO'],
 				colModel:[
-					{name:'id',index:'id', frozen:true,align:'left',search:false, editable: true, hidden: true, editoptions: {readonly: 'readonly'}},
+					{name:'id',index:'id', frozen:true, search:false, editable: true, hidden: true, editoptions: {readonly: 'readonly'}},
 					{name:'nombre',index:'nombre',width:150, editable:true, hidden: false, editoptions:{size:"20", maxlength:"30"}, editrules: {required: true, edithidden:true}},
 					{name:'titulo',index:'titulo',width:150, editable:true, editoptions:{size:"20", maxlength:"50"}, editrules: {required: true}},
-					{name:'estado',index:'estado',width:150, editable:true, hidden: true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},
 					{name:'icono',index:'icono',width:150, editable:true, editoptions:{size:"20", maxlength:"50"}, editrules: {required: true}},				
-					
+					{name:'estado',index:'estado',width:150, editable:true, search:false, hidden: false, editoptions:{size:"20"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},
 				],
 		        rownumbers: true,
 		        rowNum:10,
 		        rowList:[10,20,30],
-		        pager : pager_selector,
+		        pager: pager_selector,
 		        sortname: 'id',
 		        sortorder: 'asc',
 		        altRows: true,
 		        multiselect: false,
 		        multiboxonly: false,
-		        viewrecords : true,
-		        loadComplete : function() {
+		        viewrecords: true,
+		        loadComplete: function() {
 		            var table = this;
-		            setTimeout(function(){
+		            setTimeout(function() {
 		                styleCheckbox(table);
 		                updateActionIcons(table);
 		                updatePagerIcons(table);
@@ -60,17 +59,17 @@ angular.module('vadowApp')
 		    });
 		    $(window).triggerHandler('resize.jqGrid');//cambiar el tamaño para hacer la rejilla conseguir el tamaño correcto
 
-		    function aceSwitch( cellvalue, options, cell ) {
-		        setTimeout(function(){
-		            $(cell) .find('input[type=checkbox]')
+		    function aceSwitch(cellvalue, options, cell) {
+		        setTimeout(function() {
+		            $(cell).find('input[type=checkbox]')
 		            .addClass('ace ace-switch ace-switch-5')
 		            .after('<span class="lbl"></span>');
 		        }, 0);
 		    }
 		    //enable datepicker
-		    function pickDate( cellvalue, options, cell ) {
-		        setTimeout(function(){
-		            $(cell) .find('input[type=text]')
+		    function pickDate(cellvalue, options, cell) {
+		        setTimeout(function() {
+		            $(cell).find('input[type=text]')
 		            .datepicker({format:'yyyy-mm-dd' , autoclose:true}); 
 		        }, 0);
 		    }
@@ -78,31 +77,31 @@ angular.module('vadowApp')
 		    jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 		    {   //navbar options
 		        edit: true,
-		        editicon : 'ace-icon fa fa-pencil blue',
+		        editicon: 'ace-icon fa fa-pencil blue',
 		        add: true,
-		        addicon : 'ace-icon fa fa-plus-circle purple',
+		        addicon: 'ace-icon fa fa-plus-circle purple',
 		        del: false,
-		        delicon : 'ace-icon fa fa-trash-o red',
+		        delicon: 'ace-icon fa fa-trash-o red',
 		        search: true,
-		        searchicon : 'ace-icon fa fa-search orange',
+		        searchicon: 'ace-icon fa fa-search orange',
 		        refresh: true,
-		        refreshicon : 'ace-icon fa fa-refresh green',
+		        refreshicon: 'ace-icon fa fa-refresh green',
 		        view: true,
-		        viewicon : 'ace-icon fa fa-search-plus grey'
+		        viewicon: 'ace-icon fa fa-search-plus grey'
 		    },
 		    {
 		    	closeAfterEdit: true,
 		        recreateForm: true,
 		        viewPagerButtons: false,
 		        overlay:true,
-		        beforeShowForm : function(e) {
+		        beforeShowForm: function(e) {
 		            var form = $(e[0]);
 		            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
 		            style_edit_form(form);
 		        },
-		        afterSubmit: function(response)  {
+		        afterSubmit: function(response) {
 	                retorno = response.responseText;
-	                if(retorno == '1'){
+	                if(retorno == '1') {
 	                	 $.gritter.add({			                
 			                title: 'Mensaje de Salida',			                
 			                text: 'Datos Modificados Correctamente',
@@ -113,7 +112,7 @@ angular.module('vadowApp')
 	                	if(retorno == '2') {
 	                		$("#nombre").val("");
 		                	return [false,"Error.. El nombre ya fue agregado"];
-		                }else{	
+		                } else {	
 		                	if(retorno == '3') {
 		                		$("#titulo").val("");
 			                	return [false,"Error.. El título ya fue agregado"];
@@ -127,8 +126,8 @@ angular.module('vadowApp')
 		        closeAfterAdd: true,
 		        recreateForm: true,
 		        viewPagerButtons: false,
-		        overlay:true,
-		        beforeShowForm : function(e) {
+		        overlay: true,
+		        beforeShowForm: function(e) {
 		            var form = $(e[0]);
 		            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
 		            .wrapInner('<div class="widget-header" />')
@@ -147,8 +146,7 @@ angular.module('vadowApp')
 	                	if(retorno == '2') {
 	                		$("#nombre").val("");
 		                	return [false,"Error.. El nombre ya fue agregado"];
-		                }else{		                	
-		                }
+		                } else {}
 	                }
 	                return [true,'',retorno];
 	            },
@@ -156,27 +154,25 @@ angular.module('vadowApp')
 		    {
 		        //delete record form
 		        recreateForm: true,
-		        overlay:true,
-		        beforeShowForm : function(e) {
+		        overlay: true,
+		        beforeShowForm: function(e) {
 		            var form = $(e[0]);
 		            if(form.data('styled')) return false;
 		            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
 		            style_delete_form(form);
 		            form.data('styled', true);
 		        },
-		        onClick : function(e) {
-		      
-		        }
+		        onClick: function(e) { }
 		    },
 		    {
 		        recreateForm: true,
-		        overlay:true,
-		        afterShowSearch: function(e){
+		        overlay: true,
+		        afterShowSearch: function(e) {
 		            var form = $(e[0]);
 		            form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
 		            style_search_form(form);
 		        },
-		        afterRedraw: function(){
+		        afterRedraw: function() {
 		            style_search_filters($(this));
 		        },
 		        multipleSearch: false,
@@ -186,17 +182,13 @@ angular.module('vadowApp')
 		    },
 		    {
 		        recreateForm: true,
-		        overlay:true,
-		        beforeShowForm: function(e){
+		        overlay: true,
+		        beforeShowForm: function(e) {
 		            var form = $(e[0]);
 		            form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
 		        }
 		    })
-
 		    function style_edit_form(form) {
-		        //enable datepicker on "sdate" field and switches for "stock" field
-		        //form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
-		        
 		        form.find('input[name=stock]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
 		                
 		        //update buttons classes
@@ -210,14 +202,12 @@ angular.module('vadowApp')
 		        buttons.eq(0).append('<i class="ace-icon fa fa-chevron-left"></i>');
 		        buttons.eq(1).append('<i class="ace-icon fa fa-chevron-right"></i>');       
 		    }
-
 		    function style_delete_form(form) {
 		        var buttons = form.next().find('.EditButton .fm-button');
 		        buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide();//ui-icon, s-icon
 		        buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
 		        buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>')
 		    }
-		    
 		    function style_search_filters(form) {
 		        form.find('.delete-rule').val('X');
 		        form.find('.add-rule').addClass('btn btn-xs btn-primary');
@@ -231,14 +221,12 @@ angular.module('vadowApp')
 		        buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
 		        buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
 		    }
-		    
 		    function beforeDeleteCallback(e) {
 		        var form = $(e[0]);
 		        if(form.data('styled')) return false;
 		        
 		        form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
 		        style_delete_form(form);
-		        
 		        form.data('styled', true);
 		    }
 		    
@@ -254,8 +242,7 @@ angular.module('vadowApp')
 		    
 		    //replace icons with FontAwesome icons like above
 		    function updatePagerIcons(table) {
-		        var replacement = 
-		            {
+		        var replacement = {
 		            'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
 		            'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
 		            'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
@@ -278,6 +265,5 @@ angular.module('vadowApp')
 		        $(grid_selector).jqGrid('GridUnload');
 		        $('.ui-jqdialog').remove();
 		    });
-			
 		});	
 	})

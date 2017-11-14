@@ -55,6 +55,9 @@
 		<script type="text/javascript" src="data/parametros/menu/app.js"></script>
 		<script type="text/javascript" src="data/parametros/submenu/app.js"></script>
 		<script type="text/javascript" src="data/parametros/accesos/app.js"></script>
+		<script type="text/javascript" src="data/parametros/empresa/app.js"></script>
+		<script type="text/javascript" src="data/parametros/tipoIdentificacion/app.js"></script>
+		<script type="text/javascript" src="data/parametros/usuarios/app.js"></script>
 	</head>
 	<body class="skin-3 no-skin">
 		<div id="navbar" class="navbar navbar-default ace-save-state">
@@ -76,7 +79,7 @@
 					<ul class="nav ace-nav" id="nav">
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle" id="nav">
-								<img class="nav-user-photo" src=<?php  print_r('data/usuarios/images/'. $_SESSION['userVadow']['imagen']); ?> alt="" />									
+								<img class="nav-user-photo" src=<?php  print_r('data/parametros/usuarios/'. $_SESSION['userVadow']['imagen']); ?> alt="" />									
 								<span class="user-info">
 									<small>Bienvenido(a),</small>
 									<?php  print_r($_SESSION['userVadow']['name']); ?>									
@@ -175,9 +178,9 @@
 		</div><!-- /.main-container -->
 	
 		<script src="dist/js/angular-chosen.min.js"></script>
-		<script type="text/javascript">
+		<!-- <script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='dist/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-		</script> 				
+		</script>  -->				
 		<script src="dist/js/bootbox.min.js"></script>
 		<script src="dist/js/bootstrap.min.js"></script>
 		<script src="dist/js/gritter.js"></script>
@@ -189,135 +192,146 @@
 		<script src="dist/js/moment.min.js"></script>
 		<script src="dist/js/wizard.min.js"></script>
 		<script src="dist/js/tree.min.js"></script>
+		<script src="dist/js/jquery.blockUI.js"></script>
+		<script src="dist/js/lockr.min.js"></script>
 		
 		<!--[if lte IE 8]>
 		  <script src="dist/js/excanvas.min.js"></script>
 		<![endif]-->
 		
 		<style type="text/css">
-			#tablas .table-bordered>tbody>tr>td{
-				padding: 6px !important;
+			#tablas .table-bordered>tbody>tr>td {
+			    padding: 6px !important;
 			}
-			.ui-jqgrid tr.jqgrow td{
-				font-size: 12px;
+
+			.ui-jqgrid tr.jqgrow td {
+			    font-size: 12px;
 			}
-			.ace-spinner{
-				width: 100% !important;
+
+			.ace-spinner {
+			    width: 100% !important;
 			}
+
 			.loading2 {
-			  position: fixed;
-			  z-index: 999;
-			  height: 2em;
-			  width: 2em;
-			  overflow: show;
-			  margin: auto;
-			  top: 0;
-			  left: 0;
-			  bottom: 0;
-			  right: 0;
+			    position: fixed;
+			    z-index: 999;
+			    height: 2em;
+			    width: 2em;
+			    overflow: show;
+			    margin: auto;
+			    top: 0;
+			    left: 0;
+			    bottom: 0;
+			    right: 0;
 			}
 
 			/* Transparent Overlay */
+
 			.loading2:before {
-			  content: '';
-			  display: block;
-			  position: fixed;
-			  top: 0;
-			  left: 0;
-			  width: 100%;
-			  height: 100%;
-			  background-color: rgba(0,0,0,0.7);
+			    content: '';
+			    display: block;
+			    position: fixed;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 100%;
+			    background-color: rgba(0, 0, 0, 0.7);
 			}
 
 			/* :not(:required) hides these rules from IE9 and below */
+
 			.loading2:not(:required) {
-			  /* hide "loading2..." text */
-			  font: 0/0 a;
-			  color: transparent;
-			  text-shadow: none;
-			  background-color: transparent;
-			  border: 0;
+			    /* hide "loading2..." text */
+			    font: 0/0 a;
+			    color: transparent;
+			    text-shadow: none;
+			    background-color: transparent;
+			    border: 0;
 			}
 
 			.loading2:not(:required):after {
-			  content: '';
-			  display: block;
-			  font-size: 10px;
-			  width: 1em;
-			  height: 1em;
-			  margin-top: -0.5em;
-			  -webkit-animation: spinner 1500ms infinite linear;
-			  -moz-animation: spinner 1500ms infinite linear;
-			  -ms-animation: spinner 1500ms infinite linear;
-			  -o-animation: spinner 1500ms infinite linear;
-			  animation: spinner 1500ms infinite linear;
-			  border-radius: 0.5em;
-			  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-			  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+			    content: '';
+			    display: block;
+			    font-size: 10px;
+			    width: 1em;
+			    height: 1em;
+			    margin-top: -0.5em;
+			    -webkit-animation: spinner 1500ms infinite linear;
+			    -moz-animation: spinner 1500ms infinite linear;
+			    -ms-animation: spinner 1500ms infinite linear;
+			    -o-animation: spinner 1500ms infinite linear;
+			    animation: spinner 1500ms infinite linear;
+			    border-radius: 0.5em;
+			    -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+			    box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
 			}
+
 			@-webkit-keyframes spinner {
-			  0% {
-			    -webkit-transform: rotate(0deg);
-			    -moz-transform: rotate(0deg);
-			    -ms-transform: rotate(0deg);
-			    -o-transform: rotate(0deg);
-			    transform: rotate(0deg);
-			  }
-			  100% {
-			    -webkit-transform: rotate(360deg);
-			    -moz-transform: rotate(360deg);
-			    -ms-transform: rotate(360deg);
-			    -o-transform: rotate(360deg);
-			    transform: rotate(360deg);
-			  }
+			    0% {
+			        -webkit-transform: rotate(0deg);
+			        -moz-transform: rotate(0deg);
+			        -ms-transform: rotate(0deg);
+			        -o-transform: rotate(0deg);
+			        transform: rotate(0deg);
+			    }
+			    100% {
+			        -webkit-transform: rotate(360deg);
+			        -moz-transform: rotate(360deg);
+			        -ms-transform: rotate(360deg);
+			        -o-transform: rotate(360deg);
+			        transform: rotate(360deg);
+			    }
 			}
+
 			@-moz-keyframes spinner {
-			  0% {
-			    -webkit-transform: rotate(0deg);
-			    -moz-transform: rotate(0deg);
-			    -ms-transform: rotate(0deg);
-			    -o-transform: rotate(0deg);
-			    transform: rotate(0deg);
-			  }
-			  100% {
-			    -webkit-transform: rotate(360deg);
-			    -moz-transform: rotate(360deg);
-			    -ms-transform: rotate(360deg);
-			    -o-transform: rotate(360deg);
-			    transform: rotate(360deg);
-			  }
+			    0% {
+			        -webkit-transform: rotate(0deg);
+			        -moz-transform: rotate(0deg);
+			        -ms-transform: rotate(0deg);
+			        -o-transform: rotate(0deg);
+			        transform: rotate(0deg);
+			    }
+			    100% {
+			        -webkit-transform: rotate(360deg);
+			        -moz-transform: rotate(360deg);
+			        -ms-transform: rotate(360deg);
+			        -o-transform: rotate(360deg);
+			        transform: rotate(360deg);
+			    }
 			}
+
 			@-o-keyframes spinner {
-			  0% {
-			    -webkit-transform: rotate(0deg);
-			    -moz-transform: rotate(0deg);
-			    -ms-transform: rotate(0deg);
-			    -o-transform: rotate(0deg);
-			    transform: rotate(0deg);
-			  }
-			  100% {
-			    -webkit-transform: rotate(360deg);
-			    -moz-transform: rotate(360deg);
-			    -ms-transform: rotate(360deg);
-			    -o-transform: rotate(360deg);
-			    transform: rotate(360deg);
-			  }
+			    0% {
+			        -webkit-transform: rotate(0deg);
+			        -moz-transform: rotate(0deg);
+			        -ms-transform: rotate(0deg);
+			        -o-transform: rotate(0deg);
+			        transform: rotate(0deg);
+			    }
+			    100% {
+			        -webkit-transform: rotate(360deg);
+			        -moz-transform: rotate(360deg);
+			        -ms-transform: rotate(360deg);
+			        -o-transform: rotate(360deg);
+			        transform: rotate(360deg);
+			    }
 			}
+
 			@keyframes spinner {
-			  0% {
-			    -webkit-transform: rotate(0deg);
-			    -moz-transform: rotate(0deg);
-			    -ms-transform: rotate(0deg);
-			    -o-transform: rotate(0deg);
-			    transform: rotate(0deg);
-			  }
-			  100% {
-			    -webkit-transform: rotate(360deg);
-			    -moz-transform: rotate(360deg);
-			    -ms-transform: rotate(360deg);
-			    -o-transform: rotate(360deg);
-			    transform: rotate(360deg);
-			  }
+			    0% {
+			        -webkit-transform: rotate(0deg);
+			        -moz-transform: rotate(0deg);
+			        -ms-transform: rotate(0deg);
+			        -o-transform: rotate(0deg);
+			        transform: rotate(0deg);
+			    }
+			    100% {
+			        -webkit-transform: rotate(360deg);
+			        -moz-transform: rotate(360deg);
+			        -ms-transform: rotate(360deg);
+			        -o-transform: rotate(360deg);
+			        transform: rotate(360deg);
+			    }
 			}
 		</style>
 	</body>

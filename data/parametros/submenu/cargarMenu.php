@@ -12,6 +12,7 @@
 	while ($row = $class->fetch_array($sql)) {
     	$response .= '<option value="'.$row[0].'">'.utf8_decode($row[1]).'</option>';
 	}
-	$response .= '</select>';	
+	$response .= '</select>';
+		
 	echo $response;	
 ?>

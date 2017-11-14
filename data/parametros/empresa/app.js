@@ -33,13 +33,16 @@ angular.module('vadowApp')
 	    }
   	}])
 	.controller('empresaController', function ($scope, $route, $http) {	
-		$scope.$route = $route;	
+		$scope.$route = $route;
+		$("#file_1, #file_2").ace_file_input('reset_input');
+		$scope.buttonText = "Guardar Datos";	
 		var formdata = new FormData();
+
 		jQuery(function($) {	
-			$( "#tabEmpresa" ).click(function( event ) {
+			$( "#tabEmpresa" ).click(function(event) {
 				event.preventDefault();  
 			});	
-			$( "#tabEmpresa" ).on('shown.bs.tab', function (e) {
+			$("#tabEmpresa").on('shown.bs.tab', function(e) {
 				$('.chosen-select').each(function() {
 					var $this = $(this);
 					$this.next().css({'width': $this.parent().width()});
@@ -77,15 +80,57 @@ angular.module('vadowApp')
 					//onchange:''
 					//
 				});
-			}		
+			}
+
+			$scope.cargadatos = function() {
+				$.ajax({
+	                type: "POST",
+	                url: 'data/parametros/empresa/app.php',          
+	                data:{consulta_ruc:'consulta_ruc',txt_ruc: $scope.empresa.txt_3},
+	                dataType: 'json',
+	                beforeSend: function() {
+	                	$.blockUI({ css: { 
+				            border: 'none', 
+				            padding: '15px', 
+				            backgroundColor: '#000', 
+				            '-webkit-border-radius': '10px', 
+				            '-moz-border-radius': '10px', 
+				            opacity: .5, 
+				            color: '#fff' 
+				        	},
+				            message: '<h3>Consultando, Por favor espere un momento    ' + '<i class="fa fa-spinner fa-spin"></i>' + '</h3>'
+				    	});
+	                },
+	                success: function(data) {
+	                	$.unblockUI();
+	                	if(data.datosEmpresa.valid == 'false') {
+		            		$.gritter.add({
+								title: 'Lo sentimos", "Usted no dispone de un RUC registrado en el SRI, o el número ingresado es Incorrecto."',
+								class_name: 'gritter-error gritter-center',
+								time: 1000,
+							});
+							$scope.empresa.txt_3 = "";
+		            	} else {
+		            		if(data.datosEmpresa.valid == 'true') {
+		            			$scope.empresa = {		    		
+					    			txt_1 : data.datosEmpresa.nombre_comercial,
+						    		txt_2 : data.datosEmpresa.razon_social		   						
+						    	}		            		
+				            }
+		            	}
+	                }
+	            });
+			}
+
 		});
-		$scope.buttonText = "Guardar Datos";			
-    	$scope.getFiles = function ($files, $val) {	    		
-        	angular.forEach($files, function (value, key, name) {           		            	
+					
+    	$scope.getFiles = function($files, $val) {	    		
+        	angular.forEach($files, function(value, key, name) {           		            	
             	formdata.append($val, value);
         	});
-    	};    	
-		$scope.submitForm = function(){ 			
+    	};
+
+		$scope.submitForm = function() { 			
 			formdata.append('nombreComercial',undefinedFunction($scope.empresa.txt_1));
 			formdata.append('razonSocial',undefinedFunction($scope.empresa.txt_2));
 			formdata.append('ruc',undefinedFunction($scope.empresa.txt_3));
@@ -112,8 +157,9 @@ angular.module('vadowApp')
                     }			        
 			    })
 			    .then(function(response) {
-			    	formdata = new FormData();			    
-			    	if(response.data == 1){
+			    	formdata = new FormData();
+
+			    	if(response.data == 1) {
 			    		$scope.empresa = {};
 			    		$scope.formEmpresa.$setPristine();
 			    		$scope.buttonText = "Guardar Datos";
@@ -127,9 +173,8 @@ angular.module('vadowApp')
 							}
 						});
 						loadData();
-			    	}
-			    	else{
-			    		if(response.data == 5){
+			    	} else {
+			    		if(response.data == 5) {
 			    			bootbox.dialog({
 								message: "Error! El registro esta siendo modificado por otro usuario. Recarge los datos antes de continuar", 
 								buttons: {
@@ -139,7 +184,7 @@ angular.module('vadowApp')
 									}
 								}
 							});
-			    		}else{
+			    		} else {
 			    			bootbox.dialog({
 								message: "Error! Al intentar guardar los Datos. Comuniquese con el Administrador", 
 								buttons: {
@@ -152,19 +197,21 @@ angular.module('vadowApp')
 			    		}
 			    	}
 			    }, 
-			    function(response) { // optional
-			            // failed
+			    function(response) { 
+			  
 			    });
-			}else{
+			} else {
 				formdata = new FormData();
 			}
 		};
-		$scope.soloNumeros = function($event){
-	        if(isNaN(String.fromCharCode($event.keyCode))){
+
+		$scope.soloNumeros = function($event) {
+	        if(isNaN(String.fromCharCode($event.keyCode))) {
 	            $event.preventDefault();
 	        }
-		};		
-		function loadData(){
+		};
+
+		function loadData() {
 	    	$http({
 		        url: 'data/parametros/empresa/app.php',
 		        method: "POST",
@@ -172,7 +219,7 @@ angular.module('vadowApp')
 		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		    })
 		    .then(function(response) {
-		    	if(response.data.length > 0){
+		    	if(response.data.length > 0) {
 			    	$scope.empresa = {		    		
 		    			txt_1 : response.data[0]['nombreComercial'],
 			    		txt_2 : response.data[0]['razonSocial'],
@@ -189,21 +236,20 @@ angular.module('vadowApp')
 			    	$("#select_obligacion").val(response.data[0]['obligacion']);
 			    	$("#select_obligacion").trigger("chosen:updated");
 			    	$scope.buttonText = "Modificar Datos";
-		    	}else{
+		    	} else {
 		    		$scope.buttonText = "Guardar Datos";
+		    		$scope.filepreview =  'data/parametros/empresa/logos/defaul.png';
 		    	}
 		    }, 
-		    function(response) { // optional
-		            // failed
+		    function(response) { 
+		        
 		    });
 		}
 
-		function undefinedFunction(val){
-
-			if(val == 'undefined'){
-				console.log(val)
+		function undefinedFunction(val) {
+			if(val == 'undefined') {
 				return val = '';
-			}else{
+			} else {
 				return val;
 			}
 		}

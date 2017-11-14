@@ -3,23 +3,31 @@
 		<ul class="breadcrumb">
 			<li>
 				<i class="ace-icon fa fa-home home-icon"></i>
-				<a href="#">Home</a>
+				<a href="#!/">Inicio</a>
 			</li>
-			<li>
-				<a href="#">Parámetros</a>
-			</li>			
+			<li class="active">Parámetros</li>			
 			<li class="active">Usuarios</li>
-		</ul><!-- /.breadcrumb -->
+		</ul>
 	</div>
+
 	<div class="page-content">
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<i class="fa fa-edit"> </i> Usuarios
+						<i class="fa fa-edit"></i> Usuarios
 					</div>
-				    <div class="panel-body">				    	
-				    	<div class="col-md-12 col-sm-12 col-xs-12">				    		
+				    <div class="panel-body">
+				    	<div class="col-md-3">
+					    	<div class="widget-box">
+								<div class="widget-body">
+									<div class="widget-main">
+										<img name="image" class=" img-responsive" alt="Foto Usuario" ng-src="{{filepreview}}" ng-show="filepreview"  style="min-height: 50px;" />
+									</div>
+								</div>
+							</div>	
+				    	</div>
+				    	<div class="col-md-9">			    		
 							<div class="tabbable">
 								<ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="tabUsuario">
 									<li class="active">
@@ -30,106 +38,172 @@
 									<div class="tab-content">
 										<div id="detalles" class="tab-pane in active">										
 											<div class="form-group">
-												<label for="selectTipoIdentificacion" class="col-sm-3 control-label bolder">Tipo Identificación:</label>
-											    <div class="col-sm-4">											 	  	
-													<select id="selectTipoIdentificacion" name="selectTipoIdentificacion" class="chosen-select form-control" data-placeholder="Seleccione..." chosen ng-model="recipients" ng-options = "recipient.id as recipient.title for recipient in recipientsList track by recipient.id">
+												<label for="selectTipoIdentificacion" class="col-sm-3 control-label bolder">Tipo Identificación (*):</label>
+											    <div class="col-sm-6">											 	  	
+													<select id="selectTipoIdentificacion" name="selectTipoIdentificacion" class="chosen-select form-control" data-placeholder="Seleccione..." chosen ng-model="recipients" ng-options="recipient.id as recipient.title for recipient in recipientsList track by recipient.id">
 													</select> 
 											    </div>
-											    <div class="col-sm-5" ng-class="{ 'has-error' : formUsuarios.txt_2.$invalid && !formUsuarios.txt_2.$pristine }">	
-													<input type="text" class="form-control" name="txt_2" placeholder="Número Identificación " ng-model="Usuarios.txt_2" required> 
-													<input type="hidden" name="txt_id" ng-model="Usuarios.txt_id"> 
-											 		<input type="hidden" name="txt_verificador" ng-model="Usuarios.txt_verificador">											 		
-											    </div>
-											</div>											
+											</div>
+
+											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_2.$invalid && !formUsuarios.txt_2.$pristine }">
+												<label for="txt_2" class="col-sm-3 control-label bolder">Identificación (*):</label>
+											    <div class="col-sm-6">
+											 		<input type="text" class="form-control" name="txt_2" placeholder="Número Identificación" ng-model="Usuarios.txt_2" required>
+											 		<input type="hidden" name="txt_1" ng-model="Usuarios.txt_1"> 
+										 			<input type="hidden" name="txt_verificador" ng-model="Usuarios.txt_verificador">
+											 	    <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_2.$invalid && !formUsuarios.txt_2.$pristine" class="help-block">Este campo es Obligatorio.</p>
+											    </div>										 		
+										    </div>
+
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_3.$invalid && !formUsuarios.txt_3.$pristine }">
-												<label for="txt_3" class="col-sm-3 control-label bolder">Nombres:</label>
-											    <div class="col-sm-9">
+												<label for="txt_3" class="col-sm-3 control-label bolder">Nombres Completos (*):</label>
+											    <div class="col-sm-6">
 											 		<input type="text" class="form-control" name="txt_3" placeholder="Nombres Completos" ng-model="Usuarios.txt_3" required>											 	    
 											 	    <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_3.$invalid && !formUsuarios.txt_3.$pristine" class="help-block">Este campo es Obligatorio.</p>
 											    </div>
-											</div>	
+											</div>
+
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_4.$invalid && !formUsuarios.txt_4.$pristine }">
-												<label for="txt_4" class="col-sm-3 control-label bolder">Apellidos:</label>
-											    <div class="col-sm-9">
-											 		<input type="text" class="form-control" name="txt_4" placeholder="Apellidos" ng-model="Usuarios.txt_4" required>											 	    
+												<label for="txt_4" class="col-sm-3 control-label bolder">Apellidos Completos (*):</label>
+											    <div class="col-sm-6">
+											 		<input type="text" class="form-control" name="txt_4" placeholder="Apellidos Completos" ng-model="Usuarios.txt_4" required>											 	    
 											 	    <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_4.$invalid && !formUsuarios.txt_4.$pristine" class="help-block">Este campo es Obligatorio.</p>
 											    </div>
 											</div>
+
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_5.$invalid && !formUsuarios.txt_5.$pristine }">
-												<label for="txt_5" class="col-sm-3 control-label bolder">Nombre Usuario:</label>
-											    <div class="col-sm-9">
-											 	   <input type="text" class="form-control" name="txt_5" placeholder="Nombre Usuario " ng-model="Usuarios.txt_5" required>
-											 	   <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_5.$invalid && !formUsuarios.txt_5.$pristine" class="help-block">Este campo es Obligatorio.</p>
+												<label for="txt_5" class="col-sm-3 control-label bolder">Teléfono Fijo:</label>
+											    <div class="col-sm-6">
+											    	<div class="clearfix">
+														<span class="block input-icon">
+											 	   			<input type="text" class="form-control" name="txt_5" placeholder="Teléfono Fijo"  ng-keypress="soloNumeros($event)" ng-model="Usuarios.txt_5">
+											 	   			<i class="ace-icon fa fa-phone"></i>
+											 	   		</span>
+											 	   	</div>	
 											    </div>
 											</div>
+
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_6.$invalid && !formUsuarios.txt_6.$pristine }">
-												<label for="txt_6" class="col-sm-3 control-label bolder">Correo:</label>
-											    <div class="col-sm-9">
-											 	   <input type="email" class="form-control" name="txt_6" placeholder="example@gmail.com " ng-model="Usuarios.txt_6" required>
-											 	   <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_6.$invalid && !formUsuarios.txt_6.$pristine" class="help-block">Ingrese un correo válido.</p>
+												<label for="txt_6" class="col-sm-3 control-label bolder">Teléfono Movil:</label>
+											    <div class="col-sm-6">
+											    	<div class="clearfix">
+														<span class="block input-icon">
+											 	   			<input type="text" class="form-control" name="txt_6" placeholder="Teléfono Movil"  ng-keypress="soloNumeros($event)" ng-model="Usuarios.txt_6" />
+											 	   			<i class="ace-icon fa fa-mobile"></i>
+											 	   		</span>
+											 	   	</div>	
 											    </div>
-											</div>	
+											</div>
+
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_7.$invalid && !formUsuarios.txt_7.$pristine }">
-												<label for="txt_7" class="col-sm-3 control-label bolder">Dirección:</label>
-											    <div class="col-sm-9">
-											 	   <input type="text" class="form-control" name="txt_7" placeholder="Dirección " ng-model="Usuarios.txt_7" required>
-											 	   <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_7.$invalid && !formUsuarios.txt_7.$pristine" class="help-block">Este campo es Obligatorio.</p>
+												<label for="txt_7" class="col-sm-3 control-label bolder">Dirección (*):</label>
+											    <div class="col-sm-6">
+											 	   	<input type="text" class="form-control" name="txt_7" placeholder="Dirección" ng-model="Usuarios.txt_7" required>
+											 	   	<p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_7.$invalid && !formUsuarios.txt_7.$pristine" class="help-block">Este campo es Obligatorio.</p>
 											    </div>
-											</div>																						
+											</div>
+
+											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_8.$invalid && !formUsuarios.txt_8.$pristine }">
+												<label for="txt_8" class="col-sm-3 control-label bolder">Correo (*):</label>
+											    <div class="col-sm-6">
+											    	<div class="clearfix">
+														<span class="block input-icon">
+															<input type="email" class="form-control" name="txt_8" placeholder="example@gmail.com" ng-model="Usuarios.txt_8" required>
+															<p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_8.$invalid && !formUsuarios.txt_8.$pristine" class="help-block">Ingrese un correo válido.</p>
+															<i class="ace-icon fa fa-envelope"></i>
+											            </span>
+													</div>
+												</div>
+											</div>
+
 											<div class="form-group">
 												<label for="selectGenero" class="col-sm-3 control-label bolder">Género:</label>
-											    <div class="col-sm-9">
+											    <div class="col-sm-6">
 													<select id="selectGenero" name="selectGenero" tabindex="8" class="chosen-select form-control" data-placeholder="Seleccione...">	
-														<option value="1"> Masculino</option>
-														<option value="2"> Femenino</option>														
+														<option value="Masculino">Masculino</option>
+														<option value="Femenino">Femenino</option>
 													</select>												 	   
 											    </div>
-											</div>	
+											</div>
+
 											<div class="form-group">
-												<label for="selectCargo" class="col-sm-3 control-label bolder">Cargo:</label>
-											    <div class="col-sm-9">											 	  	
-													<select id="selectCargo" name="selectCargo" class="chosen-select form-control" data-placeholder="Seleccione..." chosen ng-model="recipientsCargoList" ng-options = "recipientCargo.id as recipientCargo.title for recipientCargo in recipientsCargos track by recipientCargo.id">														
+												<label for="selectCargo" class="col-sm-3 control-label bolder">Cargo (*):</label>
+											    <div class="col-sm-6">											 	  	
+													<select id="selectCargo" name="selectCargo" class="chosen-select form-control" data-placeholder="Seleccione..." chosen ng-model="recipientsCargoList" ng-options="recipientCargo.id as recipientCargo.title for recipientCargo in recipientsCargos track by recipientCargo.id" required>
 													</select> 
 											    </div>											    
 											</div>
-											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_8.$invalid && !formUsuarios.txt_8.$pristine }">
-												<label for="txt_8" class="col-sm-3 control-label bolder">Clave:</label>
-											    <div class="col-sm-9">											    	
-											 	    <input type="password" class="form-control" name="txt_8" placeholder="Clave " ng-model="Usuarios.txt_8" required>
-											 	    <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_8.$invalid && !formUsuarios.txt_8.$pristine" class="help-block">Este campo es Obligatorio.</p>
-											    </div>
-											</div>	
+
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_9.$invalid && !formUsuarios.txt_9.$pristine }">
-												<label for="txt_9" class="col-sm-3 control-label bolder">Confirmar Clave:</label>
-											    <div class="col-sm-9">											    	
-											 	    <input type="password" class="form-control" name="txt_9" placeholder="Confirmar Clave " ng-model="Usuarios.txt_9" required compare-to="Usuarios.txt_8">
-											 	    <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_9.$invalid && !formUsuarios.txt_9.$pristine" class="help-block">Las contraseñas no coinciden.</p>
+												<label for="txt_9" class="col-sm-3 control-label bolder">Usuario (*):</label>
+											    <div class="col-sm-6">
+											    	<div class="clearfix">
+														<span class="block input-icon">
+											 	   			<input type="text" class="form-control" name="txt_9" placeholder="Usuario" ng-model="Usuarios.txt_9" required>
+											 	   			<p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_9.$invalid && !formUsuarios.txt_9.$pristine" class="help-block">Este campo es Obligatorio.</p>
+											 	   			<i class="ace-icon fa fa-user"></i>
+											 	   		</span>
+											 	   	</div>		
 											    </div>
-											</div>	
+											</div>
+
+											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_10.$invalid && !formUsuarios.txt_10.$pristine }">
+												<label for="txt_10" class="col-sm-3 control-label bolder">Clave (*):</label>
+											    <div class="col-sm-6">
+											    	<div class="clearfix">
+														<span class="block input-icon">											    	
+											 	    		<input type="password" class="form-control" name="txt_10" placeholder="Contraseña" ng-model="Usuarios.txt_10" required />
+											 	    		<p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_10.$invalid && !formUsuarios.txt_10.$pristine" class="help-block">Este campo es Obligatorio.</p>
+											 	    		<i class="ace-icon fa fa-key"></i>
+											 	    	</span>
+											 	    </div>	
+											    </div>
+											</div>
+
+											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_11.$invalid && !formUsuarios.txt_11.$pristine }">
+												<label for="txt_11" class="col-sm-3 control-label bolder">Confirmar Clave (*):</label>
+											    <div class="col-sm-6">
+											    	<div class="clearfix">
+														<span class="block input-icon">											    	
+													 	    <input type="password" class="form-control" name="txt_11" placeholder="Confirmar Contraseña" ng-model="Usuarios.txt_11" required compare-to="Usuarios.txt_10" />
+													 	    <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_11.$invalid && !formUsuarios.txt_11.$pristine" class="help-block">Las contraseñas no coinciden.</p>
+													 	    <i class="ace-icon fa fa-key"></i>
+													 	</span>
+													</div>
+											    </div>
+											</div>
+
 											<div class="form-group">
 												<label for="selectEstado" class="col-sm-3 control-label bolder">Estado:</label>
-											    <div class="col-sm-9">
+											    <div class="col-sm-6">
 													<select id="selectEstado" name="selectEstado" tabindex="9" class="chosen-select form-control" data-placeholder="Seleccione...">	
 														<option value="1"> Activo</option>
 														<option value="0"> Desactivo</option>														
 													</select>												 	   
 											    </div>
-											</div>								
+											</div>
+
+											<div class="form-group">
+												<label for="file_1" class="col-sm-3 control-label bolder">Foto:</label>
+											    <div class="col-sm-6">
+											 	   	<input type="file" class="form-control" id="file_1" name="file_1" fileinput="file" filepreview="filepreview" ng-model="Usuarios.file_1" ng-files="getFiles($files, 'file_1')">				    
+											    </div>
+											</div>	
+
 											<div class="form-group">
 												<label for="" class="col-sm-3 control-label bolder"></label>
 											    <div class="col-sm-2">
-													<button type="submit" id="btn_1" name="btn_1" class="col-sm-12 btn btn-sm btn-primary" ng-disabled="formUsuarios.$invalid">
-														{{buttonText}}														
-													</button>														  							 	   
-											    </div>											    
-											    <div class="col-sm-2">
-													<button type="button" id="btn_2" name="btn_2" ng-click="ventanaBusqueda()" class="col-sm-12 btn btn-sm btn-primary">														
-														Buscar														
-													</button>														  							 	   
+													<button type="submit" id="btn_1" name="btn_1" class="col-sm-12 btn btn-sm btn-primary" ng-disabled="formUsuarios.$invalid"><i class="ace-icon fa fa-save"></i>					{{buttonText}}														
+													</button>
 											    </div>
-											</div>																																	
+
+											    <div class="col-sm-2">
+													<button type="button" id="btn_2" name="btn_2" ng-click="ventanaBusqueda()" class="col-sm-12 btn btn-sm btn-primary"><i class="ace-icon fa fa-search"></i> 
+													Buscar
+													</button>
+											    </div>
+											</div>							
 										</div>
-										
 									</div>
 								</form>
 							</div>
@@ -137,20 +211,21 @@
 				    </div>
 				</div>
 			</div>
-		</div><!-- /.row -->
-	</div><!-- /.page-content -->
+		</div>
+	</div>
 </div>
+
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal">
     <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        
-        <div class="modal-body">
-        	<table id="table"></table>
-			<div id="pager"></div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="tooltip" title="Cerrar ventana">Cerrar</button>
-        </div>
-      </div>
+	    <div class="modal-content">
+	        <div class="modal-body">
+	        	<table id="table"></table>
+				<div id="pager"></div>
+	        </div>
+
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="tooltip" title="Cerrar ventana">Cerrar</button>
+	        </div>
+	    </div>
     </div>
 </div>

@@ -61,7 +61,7 @@ $(function() {
 				            opacity: 0.5, 
 				            color: '#fff' 
 				        	},
-				            message: '<h4><img style="width:100px;border-radius: 50%;" src="../data/usuarios/images/'+data['imagen']+'" />     BIENVENIDO: <span>'+data['name']+'</h4>',
+				            message: '<h4><img style="width:100px;border-radius: 50%;" src="../data/parametros/usuarios/'+data['imagen']+'" />     BIENVENIDO: <span>'+data['name']+'</h4>',
 				    	});
 				    	
 				    	setTimeout(function() {
