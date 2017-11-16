@@ -63,5 +63,11 @@ app.config(function($routeProvider) {
             activetab: 'usuarios',
             authorize: true
         })
+        .when('/catalogoBienes', {
+            templateUrl : 'data/parametros/catalogoBienes/app.html',
+            controller  : 'catalogoBienesController',
+            activetab: 'catalogoBienes',
+            authorize: true
+        })
         .otherwise("/");                               
 })

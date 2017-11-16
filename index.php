@@ -59,6 +59,7 @@
 		<script type="text/javascript" src="data/parametros/empresa/app.js"></script>
 		<script type="text/javascript" src="data/parametros/tipoIdentificacion/app.js"></script>
 		<script type="text/javascript" src="data/parametros/usuarios/app.js"></script>
+		<script type="text/javascript" src="data/parametros/catalogoBienes/app.js"></script>
 	</head>
 	<body class="skin-3 no-skin">
 		<div id="navbar" class="navbar navbar-default ace-save-state">
