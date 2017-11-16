@@ -33,9 +33,9 @@ angular.module('vadowApp')
 				colModel:[
 					{name:'id',index:'id', frozen:true,align:'left', search:false ,editable: true, hidden: true, editoptions: {readonly: 'readonly'}},
 					{name:'nombre_cargo',index:'nombre_cargo',width:150, editable:true, editrules: {required: true}},
-					{name:'principal',index:'principal',align:'center',width:30, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"SI:NO"}},
+					{name:'principal',index:'principal',align:'center',width:60, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"SI:NO"}},
 					{name:'observaciones',index:'observaciones',width:300, editable:true, editrules: {required: false}},
-					{name:'estado',index:'estado',width:150, editable:true, search:false, hidden: false, editoptions:{size:"20"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},
+					{name:'estado',index:'estado',align:'center',width:60, editable:true, search:false, hidden: false, editoptions:{size:"20"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},
 				],
 		        rownumbers: true,
 		        rowNum: 10,

@@ -32,6 +32,9 @@
 								<ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="tabUsuario">
 									<li class="active">
 										<a data-toggle="tab" href="#detalles">Detalles</a>
+									</li>
+									<li>
+										<a data-toggle="tab" href="#adicionales">Adicionales</a>
 									</li>									
 								</ul>
 								<form class="form-horizontal" role="form" name="formUsuarios" ng-submit="submitForm(formUsuarios.$valid)" novalidate>
@@ -39,7 +42,7 @@
 										<div id="detalles" class="tab-pane in active">										
 											<div class="form-group">
 												<label for="selectTipoIdentificacion" class="col-sm-3 control-label bolder">Tipo Identificación (*):</label>
-											    <div class="col-sm-6">											 	  	
+											    <div class="col-sm-9">											 	  	
 													<select id="selectTipoIdentificacion" name="selectTipoIdentificacion" class="chosen-select form-control" data-placeholder="Seleccione..." chosen ng-model="recipients" ng-options="recipient.id as recipient.title for recipient in recipientsList track by recipient.id">
 													</select> 
 											    </div>
@@ -47,7 +50,7 @@
 
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_2.$invalid && !formUsuarios.txt_2.$pristine }">
 												<label for="txt_2" class="col-sm-3 control-label bolder">Identificación (*):</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											 		<input type="text" class="form-control" name="txt_2" placeholder="Número Identificación" ng-model="Usuarios.txt_2" required>
 											 		<input type="hidden" name="txt_1" ng-model="Usuarios.txt_1"> 
 										 			<input type="hidden" name="txt_verificador" ng-model="Usuarios.txt_verificador">
@@ -57,7 +60,7 @@
 
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_3.$invalid && !formUsuarios.txt_3.$pristine }">
 												<label for="txt_3" class="col-sm-3 control-label bolder">Nombres Completos (*):</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											 		<input type="text" class="form-control" name="txt_3" placeholder="Nombres Completos" ng-model="Usuarios.txt_3" required>											 	    
 											 	    <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_3.$invalid && !formUsuarios.txt_3.$pristine" class="help-block">Este campo es Obligatorio.</p>
 											    </div>
@@ -65,7 +68,7 @@
 
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_4.$invalid && !formUsuarios.txt_4.$pristine }">
 												<label for="txt_4" class="col-sm-3 control-label bolder">Apellidos Completos (*):</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											 		<input type="text" class="form-control" name="txt_4" placeholder="Apellidos Completos" ng-model="Usuarios.txt_4" required>											 	    
 											 	    <p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_4.$invalid && !formUsuarios.txt_4.$pristine" class="help-block">Este campo es Obligatorio.</p>
 											    </div>
@@ -73,7 +76,7 @@
 
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_5.$invalid && !formUsuarios.txt_5.$pristine }">
 												<label for="txt_5" class="col-sm-3 control-label bolder">Teléfono Fijo:</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											    	<div class="clearfix">
 														<span class="block input-icon">
 											 	   			<input type="text" class="form-control" name="txt_5" placeholder="Teléfono Fijo"  ng-keypress="soloNumeros($event)" ng-model="Usuarios.txt_5">
@@ -85,7 +88,7 @@
 
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_6.$invalid && !formUsuarios.txt_6.$pristine }">
 												<label for="txt_6" class="col-sm-3 control-label bolder">Teléfono Movil:</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											    	<div class="clearfix">
 														<span class="block input-icon">
 											 	   			<input type="text" class="form-control" name="txt_6" placeholder="Teléfono Movil"  ng-keypress="soloNumeros($event)" ng-model="Usuarios.txt_6" />
@@ -97,15 +100,14 @@
 
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_7.$invalid && !formUsuarios.txt_7.$pristine }">
 												<label for="txt_7" class="col-sm-3 control-label bolder">Dirección (*):</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											 	   	<input type="text" class="form-control" name="txt_7" placeholder="Dirección" ng-model="Usuarios.txt_7" required>
 											 	   	<p style="margin-bottom: -5px;" ng-show="formUsuarios.txt_7.$invalid && !formUsuarios.txt_7.$pristine" class="help-block">Este campo es Obligatorio.</p>
 											    </div>
 											</div>
-
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_8.$invalid && !formUsuarios.txt_8.$pristine }">
 												<label for="txt_8" class="col-sm-3 control-label bolder">Correo (*):</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											    	<div class="clearfix">
 														<span class="block input-icon">
 															<input type="email" class="form-control" name="txt_8" placeholder="example@gmail.com" ng-model="Usuarios.txt_8" required>
@@ -116,9 +118,25 @@
 												</div>
 											</div>
 
+											
+											<div class="form-group">
+												<label for="" class="col-sm-3 control-label bolder"></label>
+											    <div class="col-sm-3">
+													<button type="submit" id="btn_1" name="btn_1" class="col-sm-12 btn btn-sm btn-primary" ng-disabled="formUsuarios.$invalid"><i class="ace-icon fa fa-save"></i>{{buttonText}}
+													</button>
+											    </div>
+
+											    <div class="col-sm-2">
+													<button type="button" id="btn_2" name="btn_2" ng-click="ventanaBusqueda()" class="col-sm-12 btn btn-sm btn-primary"><i class="ace-icon fa fa-search"></i> 
+													Buscar
+													</button>
+											    </div>
+											</div>						
+										</div>
+										<div id="adicionales" class="tab-pane">
 											<div class="form-group">
 												<label for="selectGenero" class="col-sm-3 control-label bolder">Género:</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 													<select id="selectGenero" name="selectGenero" tabindex="8" class="chosen-select form-control" data-placeholder="Seleccione...">	
 														<option value="Masculino">Masculino</option>
 														<option value="Femenino">Femenino</option>
@@ -128,15 +146,15 @@
 
 											<div class="form-group">
 												<label for="selectCargo" class="col-sm-3 control-label bolder">Cargo (*):</label>
-											    <div class="col-sm-6">											 	  	
-													<select id="selectCargo" name="selectCargo" class="chosen-select form-control" data-placeholder="Seleccione..." chosen ng-model="recipientsCargoList" ng-options="recipientCargo.id as recipientCargo.title for recipientCargo in recipientsCargos track by recipientCargo.id" required>
+											    <div class="col-sm-9">											 	  	
+													<select id="selectCargo" name="selectCargo" class="chosen-select form-control" data-placeholder="Seleccione..." chosen ng-model="recipientsCargoList" ng-options="recipientCargo.id as recipientCargo.title for recipientCargo in recipientsCargos track by recipientCargo.id">
 													</select> 
 											    </div>											    
 											</div>
 
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_9.$invalid && !formUsuarios.txt_9.$pristine }">
 												<label for="txt_9" class="col-sm-3 control-label bolder">Usuario (*):</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											    	<div class="clearfix">
 														<span class="block input-icon">
 											 	   			<input type="text" class="form-control" name="txt_9" placeholder="Usuario" ng-model="Usuarios.txt_9" required>
@@ -149,7 +167,7 @@
 
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_10.$invalid && !formUsuarios.txt_10.$pristine }">
 												<label for="txt_10" class="col-sm-3 control-label bolder">Clave (*):</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											    	<div class="clearfix">
 														<span class="block input-icon">											    	
 											 	    		<input type="password" class="form-control" name="txt_10" placeholder="Contraseña" ng-model="Usuarios.txt_10" required />
@@ -162,7 +180,7 @@
 
 											<div class="form-group" ng-class="{ 'has-error' : formUsuarios.txt_11.$invalid && !formUsuarios.txt_11.$pristine }">
 												<label for="txt_11" class="col-sm-3 control-label bolder">Confirmar Clave (*):</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											    	<div class="clearfix">
 														<span class="block input-icon">											    	
 													 	    <input type="password" class="form-control" name="txt_11" placeholder="Confirmar Contraseña" ng-model="Usuarios.txt_11" required compare-to="Usuarios.txt_10" />
@@ -175,7 +193,7 @@
 
 											<div class="form-group">
 												<label for="selectEstado" class="col-sm-3 control-label bolder">Estado:</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 													<select id="selectEstado" name="selectEstado" tabindex="9" class="chosen-select form-control" data-placeholder="Seleccione...">	
 														<option value="1"> Activo</option>
 														<option value="0"> Desactivo</option>														
@@ -185,15 +203,14 @@
 
 											<div class="form-group">
 												<label for="file_1" class="col-sm-3 control-label bolder">Foto:</label>
-											    <div class="col-sm-6">
+											    <div class="col-sm-9">
 											 	   	<input type="file" class="form-control" id="file_1" name="file_1" fileinput="file" filepreview="filepreview" ng-model="Usuarios.file_1" ng-files="getFiles($files, 'file_1')">				    
 											    </div>
 											</div>	
-
 											<div class="form-group">
 												<label for="" class="col-sm-3 control-label bolder"></label>
-											    <div class="col-sm-2">
-													<button type="submit" id="btn_1" name="btn_1" class="col-sm-12 btn btn-sm btn-primary" ng-disabled="formUsuarios.$invalid"><i class="ace-icon fa fa-save"></i>					{{buttonText}}														
+											    <div class="col-sm-3">
+													<button type="submit" id="btn_1" name="btn_1" class="col-sm-12 btn btn-sm btn-primary" ng-disabled="formUsuarios.$invalid"><i class="ace-icon fa fa-save"></i>{{buttonText}}
 													</button>
 											    </div>
 
@@ -202,7 +219,7 @@
 													Buscar
 													</button>
 											    </div>
-											</div>							
+											</div>	
 										</div>
 									</div>
 								</form>

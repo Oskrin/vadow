@@ -50,6 +50,7 @@
 		<script type="text/javascript" src="data/controller.js"></script>		
 		<script type="text/javascript" src="data/home/app.js"></script>
 		<script type="text/javascript" src="data/inventario/tipoBien/app.js"></script>
+		<script type="text/javascript" src="data/inventario/bodegas/app.js"></script>
 
 		<script type="text/javascript" src="data/parametros/cargos/app.js"></script>
 		<script type="text/javascript" src="data/parametros/menu/app.js"></script>

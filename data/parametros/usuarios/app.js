@@ -6,7 +6,7 @@ angular.module('vadowApp')
 		$scope.buttonText = "Guardar Datos";			
 		$scope.recipientsList = [];		
 		$scope.recipientsCargos = [];
-		$scope.filepreview =  'data/parametros/usuarios/fotos/defaul.jpg';
+		$scope.filepreview =  'data/parametros/usuarios/fotos/default.jpg';
 
 		$scope.soloNumeros = function($event) {
 	        if(isNaN(String.fromCharCode($event.keyCode))) {
@@ -54,15 +54,15 @@ angular.module('vadowApp')
 		$scope.fecthRecipientsCargos();				
 		
 		jQuery(function($) {				
-			$( "#tabUsuarios" ).click(function(event) {
+			$( "#tabUsuario" ).click(function(event) {
 				event.preventDefault();  
 			});
-			$( "#tabUsuarios" ).on('shown.bs.tab', function(e) {
+			$( "#tabUsuario" ).on('shown.bs.tab', function(e) {
 				$('.chosen-select').each(function() {
 					var $this = $(this);
 					$this.next().css({'width': $this.parent().width()});
 				})	
-			});
+			});			
 			$('[data-toggle="tooltip"]').tooltip(); 			
 			if(!ace.vars['touch']) {			
 				$('.chosen-select').chosen({allow_single_deselect:true}); 
@@ -86,20 +86,27 @@ angular.module('vadowApp')
 				});	
 
 				$('#file_1').ace_file_input({
-					no_file:'Selecione un archivo ...',
+					no_file:'Selecione un archivo ...',					    
 					btn_choose:'Selecionar',
 					btn_change:'Cambiar',
 					droppable:false,
-					onchange:null,
-					thumbnail:false //| true | large
+					//onchange:null,
+					maxSize: 10000000, //~100 KB
+				    allowExt:  ['jpg', 'jpeg', 'png', 'gif', 'tif', 'tiff', 'bmp'],
+				    allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/tif', 'image/tiff', 'image/bmp'],
+					thumbnail:false, //| true | large
 					//whitelist:'gif|png|jpg|jpeg'
 					//blacklist:'exe|php'
 					//onchange:''
-					//
-				});			
+				})				
 			}
 			var grid_selector = "#table";
 		    var pager_selector = "#pager";
+		    $(".remove").on('click',function(){
+		    	$scope.filepreview = 'data/parametros/usuarios/fotos/default.jpg';
+		    	$scope.$apply();
+
+		    });
 		    
 		    //cambiar el tamaño para ajustarse al tamaño de la página
 		    $(window).on('resize.jqGrid', function () {
@@ -375,7 +382,8 @@ angular.module('vadowApp')
 				    		$scope.buttonText = "Guardar Datos";				    		
 						}							    		
 			    	}
-			    	$('#table').trigger('reloadGrid');	
+			    	$('#table').trigger('reloadGrid');
+			    	$scope.filepreview = 'data/parametros/usuarios/fotos/default.jpg';		    			
 			    }, 
 			    function(response) { 
 			        

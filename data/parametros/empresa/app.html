@@ -41,17 +41,17 @@
 									<div class="tab-content">
 										<div id="detalles" class="tab-pane in active">
 											<div class="form-group" ng-class="{ 'has-error' : formEmpresa.txt_3.$invalid && !formEmpresa.txt_3.$pristine }">
-												<label for="txt_3" class="col-sm-3 control-label bolder">RUC:</label>
-											    <div class="col-sm-5">
+												<label for="txt_3" class="col-sm-3 col-xs-12 control-label bolder">RUC:</label>
+											    <div class="col-sm-8 col-xs-11">
 											 	   	<input type="text" class="form-control" name="txt_3" placeholder="RUC" ng-model="empresa.txt_3" required ng-minlength="13" ng-maxlength="13" ng-keypress="soloNumeros($event)" />
 											       	<p style="margin-bottom: -5px;" ng-show="formEmpresa.txt_3.$error.minlength || formEmpresa.txt_3.$error.maxlength " class="help-block">Máximo 13 carácteres</p>
 											    </div>
-											    <button type="button" ng-click="cargadatos()" class="btn btn-primary btn-sm"><i class="ace-icon fa fa-search"></i></button>
+											    <button type="button" ng-click="cargadatos()" class="btn btn-primary btn-sm nopadding "><i class="ace-icon fa fa-search"></i></button>
 											</div>
 
 											<div class="form-group" ng-class="{ 'has-error' : formEmpresa.txt_1.$invalid && !formEmpresa.txt_1.$pristine }">
-												<label for="txt_1" class="col-sm-3 control-label bolder">Nombre Comercial:</label>
-											    <div class="col-sm-6">
+												<label for="txt_1" class="col-sm-3 col-xs-12 control-label bolder">Nombre Comercial:</label>
+											    <div class="col-sm-9">
 											 	   	<input type="text" class="form-control" name="txt_1" placeholder="Nombre Empresa" ng-model="empresa.txt_1" required> 
 											 	   	<input type="hidden" name="txt_id" ng-model="empresa.txt_id"> 
 											 	   	<input type="hidden" name="txt_verificador" ng-model="empresa.txt_verificador"> 
@@ -60,23 +60,23 @@
 											</div>
 
 											<div class="form-group">
-												<label for="txt_2" class="col-sm-3 control-label bolder">Razón Social:</label>
-											    <div class="col-sm-6">
+												<label for="txt_2" class="col-sm-3 col-xs-12 control-label bolder">Razón Social:</label>
+											    <div class="col-sm-9">
 											 		<input type="text" class="form-control" name="txt_2" ng-model="empresa.txt_2" placeholder="Razón Social">											    
 											    </div>
 											</div>
 
 											<div class="form-group" ng-class="{ 'has-error' : formEmpresa.txt_4.$invalid && !formEmpresa.txt_4.$pristine }">
-												<label for="txt_4" class="col-sm-3 control-label bolder">Dirección:</label>
-											    <div class="col-sm-6">
+												<label for="txt_4" class="col-sm-3 col-xs-12 control-label bolder">Dirección:</label>
+											    <div class="col-sm-9">
 											 	   	<input type="text" class="form-control" name="txt_4" placeholder="Dirección" ng-model="empresa.txt_4" required>
 											 	   	<p style="margin-bottom: -5px;" ng-show="formEmpresa.txt_4.$invalid && !formEmpresa.txt_4.$pristine" class="help-block">Este campo es Obligatorio.</p>
 											    </div>
 											</div>
 
 											<div class="form-group" ng-class="{ 'has-error' : formEmpresa.txt_5.$invalid && !formEmpresa.txt_5.$pristine }">
-												<label for="txt_5" class="col-sm-3 control-label bolder">Correo Electrónico:</label>
-											    <div class="col-sm-6">
+												<label for="txt_5" class="col-sm-3 col-xs-12 control-label bolder">Correo Electrónico:</label>
+											    <div class="col-sm-9">
 											    	<div class="clearfix">
 														<span class="block input-icon">
 											 	   			<input type="email" class="form-control" name="txt_5" placeholder="example@gmail.com" ng-model="empresa.txt_5" required>
@@ -88,8 +88,8 @@
 											</div>
 
 											<div class="form-group">
-												<label for="select_obligacion" class="col-sm-3 control-label bolder">Obligado:</label>
-											    <div class="col-sm-6">
+												<label for="select_obligacion" class="col-sm-3 col-xs-12 control-label bolder">Obligado:</label>
+											    <div class="col-sm-9">
 													<select id="select_obligacion" name="select_obligacion" tabindex="8" class="chosen-select form-control" data-placeholder="Seleccione...">	
 														<option value="1"> A llevar Contabilidad: SI</option>
 														<option value="0"> A llevar Contabilidad: NO</option>
@@ -98,8 +98,8 @@
 											</div>
 
 											<div class="form-group">
-												<label for="" class="col-sm-3 control-label bolder"></label>
-											    <div class="col-sm-6">
+												<label for="" class="col-sm-3 col-xs-12 control-label bolder"></label>
+											    <div class="col-sm-9">
 													<button type="submit" id="btn_1" name="btn_1" class="btn btn-sm btn-primary" ng-disabled="formEmpresa.$invalid"><i class="ace-icon fa fa-save"></i>									
 														{{buttonText}}														
 													</button>
@@ -109,43 +109,43 @@
 
 										<div id="adicionales" class="tab-pane">
 											<div class="form-group">
-												<label for="txt_6" class="col-sm-3 control-label bolder">Nro. Contribuyente:</label>
-											    <div class="col-sm-6">
+												<label for="txt_6" class="col-sm-3 col-xs-12 control-label bolder">Nro. Contribuyente:</label>
+											    <div class="col-sm-9">
 											 	   	<input type="text" class="form-control" name="txt_6" ng-model="empresa.txt_6" />
 											    </div>											    
 											</div>
 
 											<div class="form-group">
-												<label for="txt_7" class="col-sm-3 control-label bolder">Nro. Autorizacíón:</label>
-											    <div class="col-sm-6">
+												<label for="txt_7" class="col-sm-3 col-xs-12 control-label bolder">Nro. Autorizacíón:</label>
+											    <div class="col-sm-9">
 											 	   	<input type="text" class="form-control" name="txt_7" ng-model="empresa.txt_7" />
 											    </div>											    
 											</div>
 
 											<div class="form-group">
-												<label for="file_1" class="col-sm-3 control-label bolder">Token:</label>
-											    <div class="col-sm-6">
-											 	   	<input type="file" class="form-control" id="file_1" name="file_1" ng-model="empresa.file_1" ng-files="getFiles($files, 'file_1')"> 											    
+												<label for="file_1" class="col-sm-3 col-xs-12 control-label bolder">Token:</label>
+											    <div class="col-sm-9">
+											 	   	<input type="file" class="form-control" id="file_1" name="file_1" ng-model="empresa.file_1" ng-files="getFiles($files, 'file_1')"> 
 											    </div>											    
 											</div>
 
 											<div class="form-group">
-												<label for="txt_8" class="col-sm-3 control-label bolder">Clave Token:</label>
-											    <div class="col-sm-6">
+												<label for="txt_8" class="col-sm-3 col-xs-12 control-label bolder">Clave Token:</label>
+											    <div class="col-sm-9">
 											 	   	<input type="text" class="form-control" name="txt_8" ng-model="empresa.txt_8">
 											    </div>											    
 											</div>
 
 											<div class="form-group">
-												<label for="file_2" class="col-sm-3 control-label bolder">Logo:</label>
-											    <div class="col-sm-6">
+												<label for="file_2" class="col-sm-3 col-xs-12 control-label bolder">Logo:</label>
+											    <div class="col-sm-9">
 											 	   	<input type="file" class="form-control" id="file_2" name="file_2" fileinput="file" filepreview="filepreview" ng-model="empresa.file_2" ng-files="getFiles($files, 'file_2')">			    
 											    </div>
 											</div>
 
 											<div class="form-group">
-												<label for="" class="col-sm-3 control-label bolder"></label>
-											    <div class="col-sm-6">
+												<label for="" class="col-sm-3 col-xs-12 control-label bolder"></label>
+											    <div class="col-sm-9">
 													<button type="submit" id="btn_1" name="btn_1" class="btn btn-sm btn-primary" ng-disabled="formEmpresa.$invalid"><i class="ace-icon fa fa-save"></i>
 														{{buttonText}}														
 													</button>										 	   

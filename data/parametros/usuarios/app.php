@@ -55,6 +55,18 @@
 		if($class->num_rows($resp) > 0) {		
 			echo 3; // USUARIO REPETIDO		
 		} else {
+
+			if(isset($_FILES['file_1'])) {
+				$temporal = $_FILES['file_1']['tmp_name'];
+	            $extension = explode(".",  $_FILES['file_1']['name']); 
+	            $extension = end($extension);                    			            
+	            $nombre = $_POST['id'].".".$extension;
+	            $destino = './fotos/'.$nombre;			            
+	            $root = getcwd();	
+	            if(move_uploaded_file($temporal, $root.$destino)) {
+	            	$dirFoto = $destino;
+	            }      	
+			}
 			$resp = "UPDATE usuarios SET id_tipo_identificacion = '".$_POST['tipoIdentificacion']."', identificacion = '".$_POST['identificacion']."', nombres_completos = '".$_POST['nombres']."', apellidos_completos = '".$_POST['apellidos']."', telf_fijo = '".$_POST['fijo']."', telf_movil = '".$_POST['movil']."',direccion = '".$_POST['direccion']."', correo = '".$_POST['correo']."', genero = '".$_POST['genero']."', id_cargo = '".$_POST['cargo']."', usuario = '".$_POST['usuario']."', estado = '".$_POST['estado']."'  WHERE id = '".$_POST['id']."'";				
 			if($class->consulta($resp)) {
 				echo 1;	//Usuario Guardado			

@@ -1,5 +1,5 @@
 angular.module('vadowApp')	 			
-	.controller('tipoBienController', function ($scope, $route, $http) {	
+	.controller('bodegasController', function ($scope, $route, $http) {	
 		$scope.$route = $route;
 			
 		jQuery(function($) {			
@@ -25,15 +25,15 @@ angular.module('vadowApp')
 		    });
 
 		    jQuery(grid_selector).jqGrid({
-		        url: 'data/inventario/tipoBien/appXml.php',
+		        url: 'data/inventario/bodegas/appXml.php',
 		        autoencode: false,
 		        datatype: "xml",
 				height: 320,
-				colNames:['ID','CÓDIGO','NOMBRE','ESTADO'],
+				colNames:['ID','CÓDIGO','UBICACIÓN','ESTADO'],
 				colModel:[
 					{name:'id',index:'id',align:'left', search:false, editable: true, hidden: true, editoptions: {readonly: 'readonly'}},					
 					{name:'codigo',index:'codigo',width:50, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
-					{name:'nombre',index:'nombre',width:200, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
+					{name:'ubicacion',index:'ubicacion',width:200, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
 					{name:'estado',index:'estado',width:150, editable:true, search:false, hidden: false, editoptions:{size:"20"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},
 				],	
 		        rownumbers: true,
@@ -55,7 +55,7 @@ angular.module('vadowApp')
 		                enableTooltips(table);
 		            }, 0);
 		        },
-		        editurl: "data/inventario/tipoBien/app.php",		        
+		        editurl: "data/inventario/bodegas/app.php",		        
 		    });
 		    $(window).triggerHandler('resize.jqGrid');//cambiar el tamaño para hacer la rejilla conseguir el tamaño correcto
 

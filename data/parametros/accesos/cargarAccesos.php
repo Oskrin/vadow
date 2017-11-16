@@ -45,17 +45,18 @@
 		}
 	}
 	if($_POST['funcion'] == 3){
-		$sql  = "select R.id from submenu R";		
+		$sql  = "select R.id from submenu R";				
 		$sql = $class->consulta($sql);		
 		while ($row = $class->fetch_array($sql)) {
-			$sql_1 = "select CR.id from cargo_rol CR where CR.id_cargo = '".$_POST['id']."' and CR.id_submenu = '".$row[0]."'";			
-			$sql_1 = $class->consulta($sql_1);						
-			if($class->num_rows($sql_1) == 0){
+			$sql_1 = "select CR.id from cargo_rol CR where CR.id_cargo = '".$_POST['id']."' and CR.id_submenu = '".$row[0]."'";				
+			$sql_1 = $class->consulta($sql_1);									
+			if($class->num_rows($sql_1) == 0){				
 				$sql_2 = "insert into cargo_rol (id_submenu,id_cargo,estado,fecha_creacion) values ('".$row[0]."','".$_POST['id']."','0','".$fecha."')";
+				//echo $sql_2;
 				$class->consulta($sql_2);	
 			}			
 		}
-		$sql = "select R.id from cargo_rol CR inner join submenu R on R.id = CR.id_submenu where CR.id_cargo = '".$_POST['id']."' and CR.estado = '1'";
+		$sql = "select R.id from cargo_rol CR inner join submenu R on R.id = CR.id_submenu where CR.id_cargo = '".$_POST['id']."' and CR.estado = '1'";		
 		$sql = $class->consulta($sql);	
 		$data = array();	
 		while ($row = $class->fetch_array($sql)) {

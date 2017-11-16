@@ -44,6 +44,13 @@ app.config(function($routeProvider) {
             activetab: 'tipoBien',
             authorize: true
         })
+        .when('/bodegas', {
+            templateUrl : 'data/inventario/bodegas/app.html',
+            controller  : 'bodegasController',
+            activetab: 'bodegas',
+            authorize: true
+        })
+
         .when('/tipoIdentificacion', {
             templateUrl : 'data/parametros/tipoIdentificacion/app.html',
             controller  : 'tipoIdentificacionController',

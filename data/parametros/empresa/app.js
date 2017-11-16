@@ -81,7 +81,6 @@ angular.module('vadowApp')
 					//
 				});
 			}
-
 			$scope.cargadatos = function() {
 				$.ajax({
 	                type: "POST",
@@ -121,15 +120,12 @@ angular.module('vadowApp')
 	                }
 	            });
 			}
-
-		});
-					
+		});					
     	$scope.getFiles = function($files, $val) {	    		
         	angular.forEach($files, function(value, key, name) {           		            	
             	formdata.append($val, value);
         	});
     	};
-
 		$scope.submitForm = function() { 			
 			formdata.append('nombreComercial',undefinedFunction($scope.empresa.txt_1));
 			formdata.append('razonSocial',undefinedFunction($scope.empresa.txt_2));
