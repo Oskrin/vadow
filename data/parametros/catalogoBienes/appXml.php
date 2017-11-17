@@ -13,7 +13,7 @@
         $sidx = 1;
     
     $count = 0;
-    $sql = "SELECT  COUNT(*) AS count FROM tipo_bien";
+    $sql = "SELECT  COUNT(*) AS count FROM catalogo_bienes";
     $sql = $class->consulta($sql);      
     while ($row = $class->fetch_array($sql)) {
         $count = $row[0];    
@@ -30,15 +30,15 @@
         $start = 0;
     
     if ($search == 'false') {
-        $SQL = "SELECT * FROM tipo_bien ORDER BY $sidx $sord limit $limit offset $start";
+        $SQL = "SELECT * FROM catalogo_bienes ORDER BY $sidx $sord limit $limit offset $start";
     } else {
         $campo = $_GET['searchField'];
       
         if ($_GET['searchOper'] == 'eq') {
-            $SQL = "SELECT * FROM tipo_bien WHERE $campo = '".$_GET['searchString']."' ORDER BY $sidx $sord limit $limit offset $start";
+            $SQL = "SELECT * FROM catalogo_bienes WHERE $campo = '".$_GET['searchString']."' ORDER BY $sidx $sord limit $limit offset $start";
         }         
         if ($_GET['searchOper'] == 'cn') {
-            $SQL = "SELECT * FROM tipo_bien WHERE $campo like '%$_GET[searchString]%' ORDER BY $sidx $sord limit $limit offset $start";
+            $SQL = "SELECT * FROM catalogo_bienes WHERE $campo like '%$_GET[searchString]%' ORDER BY $sidx $sord limit $limit offset $start";
         }
     }  
 
@@ -51,10 +51,11 @@
     $s .= "<records>" . $count . "</records>";
     while ($row = $class->fetch_array($resultado)) {
         $s .= "<row id='" . $row[0] . "'>";            
-        $s .= "<cell>" . $row[0] . "</cell>";             
-        $s .= "<cell>" . $row[4] . "</cell>";     
-        $s .= "<cell>" . $row[1] . "</cell>";     
-        $s .= "<cell>" . $row[2] . "</cell>";     
+        $s .= "<cell>" . $row[0] . "</cell>";
+        $s .= "<cell>" . $row[1] . "</cell>";
+        $s .= "<cell>" . $row[2] . "</cell>";
+        $s .= "<cell>" . $row[3] . "</cell>";
+        $s .= "<cell>" . $row[4] . "</cell>";        
         $s .= "</row>";
     }
     $s .= "</rows>";

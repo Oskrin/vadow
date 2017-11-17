@@ -3,6 +3,7 @@ angular.module('vadowApp')
 		$scope.$route = $route;
 			
 		jQuery(function($) {			
+			$("#loading2").css("display","none");
 			$("#tabCatalogoBien").click(function(event) {
 				event.preventDefault();  
 			});
@@ -30,16 +31,17 @@ angular.module('vadowApp')
 		        autoencode: false,
 		        datatype: "xml",
 				height: 320,
-				colNames:['ID','CÓDIGO','NOMBRE','ESTADO'],
+				colNames:['ID','ITEM','ID BIEN','DESCRIPCION','ESTADO'],
 				colModel:[
 					{name:'id',index:'id',align:'left', search:false, editable: true, hidden: true, editoptions: {readonly: 'readonly'}},					
-					{name:'codigo',index:'codigo',width:50, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
-					{name:'nombre',index:'nombre',width:200, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
-					{name:'estado',index:'estado',width:150, editable:true, search:false, hidden: false, editoptions:{size:"20"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},
+					{name:'item',index:'item',width:50, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
+					{name:'id_bien',index:'id_bien',width:100, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
+					{name:'descripcion',index:'descripcion',width:600, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
+					{name:'estado',index:'estado',width:50,align:'center', editable:true, search:false, hidden: false, editoptions:{size:"20"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},					
 				],	
 		        rownumbers: true,
-		        rowNum: 10,
-		        rowList:[10,20,30],
+		        rowNum: 100,
+		        rowList:[100,200,300],
 		        pager: pager_selector,
 		        sortname: 'id',
 		        sortorder: 'asc',
@@ -47,6 +49,7 @@ angular.module('vadowApp')
 		        multiselect: false,
 		        multiboxonly: false,
 		        viewrecords: true,
+
 		        loadComplete: function() {
 		            var table = this;
 		            setTimeout(function() {
@@ -109,13 +112,12 @@ angular.module('vadowApp')
 			                image: 'dist/images/confirm.png',
 			                class_name: 'gritter-light'
 			            });
-           			 } else {
+           			 } else {	                		
 	                	if(retorno == '2') {
-	                		$("#codigo").val("");
-		                	return [false,"Error.. Este nombre ya esta agregado"];
-		                } else {	
-		                	
-		                }
+                			$("#id_bien").val("");
+	                		return [false,"Error.. Este id bien ya existe"];
+	                	}	
+		                
 	                }
 	                return [true,'',retorno];
 	            },
@@ -140,13 +142,11 @@ angular.module('vadowApp')
 			                image: 'dist/images/confirm.png',
 			                class_name: 'gritter-light'
 			            });
-	                } else {
+	                } else {	                		
 	                	if(retorno == '2') {
-	                		$("#codigo").val("");
-		                	return [false,"Error.. Este nombre ya esta agregado"];
-		                } else {	
-		                	
-		                }
+                			$("#id_bien").val("");
+	                		return [false,"Error.. Este id bien ya existe"];
+	                	}			                
 	                }
 	                return [true,'',retorno];
 	            },
@@ -267,6 +267,44 @@ angular.module('vadowApp')
 		    $(document).one('ajaxloadstart.page', function(e) {
 		        $(grid_selector).jqGrid('GridUnload');
 		        $('.ui-jqdialog').remove();
+		    });
+
+		    $("#btn_2").on("click",function(){
+		    	$("#loading2").css("display","block");
+				var archivos = document.getElementById("file_1");				
+		    	var archivo = archivos.files;
+		    	var archivos = new FormData(document.getElementById("formCatalogo"));
+		    	
+				$.ajax({
+			        url: "data/parametros/catalogoBienes/app.php?cargarDatos="+"cargarDatos",
+			        type: "POST",			        			        
+			        contentType:false,			        			        
+			        data: archivos,        
+			        processData:false,
+			        cache:false,    
+			        //async: true,
+
+			        success: function(data) {	
+			        	$("#loading2").css("display","none");
+			        	if(data == 1){
+			        		$.gritter.add({			                
+				                title: 'Mensaje de Salida',			                
+				                text: 'Catálogo Agregado Correctamente',
+				                image: 'dist/images/confirm.png',
+				                class_name: 'gritter-light'
+				            });	
+				            $('#table').trigger('reloadGrid');												
+			        	}else{
+
+			        	}
+			        },
+			        error: function (xhr, status, errorThrown) {
+				        alert("Hubo un problema!");
+				        console.log("Error: " + errorThrown);
+				        console.log("Status: " + status);
+				        console.dir(xhr);
+			        }
+			    });
 		    });
 		});	
 	})
