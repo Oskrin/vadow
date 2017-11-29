@@ -69,5 +69,11 @@ app.config(function($routeProvider) {
             activetab: 'catalogoBienes',
             authorize: true
         })
+        .when('/planCuentas', {
+            templateUrl : 'data/parametros/planCuentas/app.html',
+            controller  : 'planCuentasController',
+            activetab: 'planCuentas',
+            authorize: true
+        })
         .otherwise("/");                               
 })

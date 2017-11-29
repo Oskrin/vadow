@@ -1,0 +1,26 @@
+-- Table: public.plan_cuentas
+
+-- DROP TABLE public.plan_cuentas;
+
+CREATE TABLE public.plan_cuentas
+(
+    id integer NOT NULL DEFAULT nextval('plan_cuentas_id_seq'::regclass),
+    codigo text COLLATE pg_catalog."default",
+    cuenta text COLLATE pg_catalog."default",
+    nivel integer,
+    debito text COLLATE pg_catalog."default",
+    credito text COLLATE pg_catalog."default",
+    devengado text COLLATE pg_catalog."default",
+    cobrado text COLLATE pg_catalog."default",
+    fecha_creacion timestamp with time zone,
+    estado boolean,
+    fecha_actualizacion timestamp with time zone,
+    CONSTRAINT plan_cuentas_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.plan_cuentas
+    OWNER to postgres;
