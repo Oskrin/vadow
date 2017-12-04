@@ -41,45 +41,55 @@
 
 		echo $resp;
 	}else{
-		if ($_POST['oper'] == "add") {
-			$sql = "SELECT count(*)count FROM plan_cuentas WHERE codigo = UPPER('".$_POST['codigo']."')";
-			$sql = $class->consulta($sql);
+		if (isset($_POST['tipo']) == "cargarPlan") {
+    		$lista = array();
+			$sql = "SELECT id,codigo,cuenta FROM plan_cuentas where estado = '1' order by codigo asc";
+			$sql = $class->consulta($sql);							
 			while ($row = $class->fetch_array($sql)) {
-				$data = $row[0];			
+				$lista[] = array('id' => $row[0], 'nombre' => ($row[1] .' - '.$row[2]));
 			}
-			if ($data != 0) {
-				$data = "2"; //ID REPETIDO
-			} else {
-				$sql = "INSERT INTO plan_cuentas (codigo, cuenta, nivel, debito, credito, devengado, cobrado, fecha_creacion, estado, fecha_actualizacion) VALUES ('".$_POST['codigo']."','".utf8_encode($_POST['cuenta'])."','".$_POST['nivel']."','".$_POST['debito']."','".$_POST['credito']."','".$_POST['devengado']."','".$_POST['cobrado']."','".$fecha."','".$_POST['estado']."','".$fecha."')";
-				//echo $sql;
-				if($class->consulta($sql)) {
-					$data = "1"; // DATOS GUARDADOS	
-				} else {
-					$data = "4"; // ERROR EN LA BASE
-				}
-			}
-			echo $data;
-		} else {
-		    if ($_POST['oper'] == "edit") {
-		    	$sql = "SELECT count(*)count FROM plan_cuentas WHERE codigo = UPPER('".$_POST['codigo']."') AND id NOT IN ('".$_POST['id']."')";	
-				
-				$sql = $class->consulta($sql);					    	
+			print_r(json_encode($lista));
+    	}else{
+			if ($_POST['oper'] == "add") {
+				$sql = "SELECT count(*)count FROM plan_cuentas WHERE codigo = UPPER('".$_POST['codigo']."')";
+				$sql = $class->consulta($sql);
 				while ($row = $class->fetch_array($sql)) {
-					$data = $row[0];
+					$data = $row[0];			
 				}
 				if ($data != 0) {
-				 	$data = "2"; // ITEM REPETIDO
-				} else {						
-					$sql = "UPDATE plan_cuentas SET codigo = '".$_POST['codigo']."',cuenta = '".$_POST['cuenta']."',nivel = '".$_POST['nivel']."', debito = '".$_POST['debito']."',credito = '".$_POST['credito']."',devengado = '".$_POST['devengado']."',cobrado = '".$_POST['cobrado']."',  fecha_actualizacion  = '".$fecha."', estado = '".$_POST['estado']."' WHERE id = '".$_POST['id']."'";
-
+					$data = "2"; //ID REPETIDO
+				} else {
+					$sql = "INSERT INTO plan_cuentas (codigo, cuenta, nivel, debito, credito, devengado, cobrado, fecha_creacion, estado, fecha_actualizacion) VALUES ('".$_POST['codigo']."','".utf8_encode($_POST['cuenta'])."','".$_POST['nivel']."','".$_POST['debito']."','".$_POST['credito']."','".$_POST['devengado']."','".$_POST['cobrado']."','".$fecha."','".$_POST['estado']."','".$fecha."')";
+					//echo $sql;
 					if($class->consulta($sql)) {
-						$data = "1"; // DATOS GUARDADOS
+						$data = "1"; // DATOS GUARDADOS	
 					} else {
 						$data = "4"; // ERROR EN LA BASE
-					}					
+					}
 				}
 				echo $data;
-		    }
+			} else {
+			    if ($_POST['oper'] == "edit") {
+			    	$sql = "SELECT count(*)count FROM plan_cuentas WHERE codigo = UPPER('".$_POST['codigo']."') AND id NOT IN ('".$_POST['id']."')";	
+					
+					$sql = $class->consulta($sql);					    	
+					while ($row = $class->fetch_array($sql)) {
+						$data = $row[0];
+					}
+					if ($data != 0) {
+					 	$data = "2"; // ITEM REPETIDO
+					} else {						
+						$sql = "UPDATE plan_cuentas SET codigo = '".$_POST['codigo']."',cuenta = '".$_POST['cuenta']."',nivel = '".$_POST['nivel']."', debito = '".$_POST['debito']."',credito = '".$_POST['credito']."',devengado = '".$_POST['devengado']."',cobrado = '".$_POST['cobrado']."',  fecha_actualizacion  = '".$fecha."', estado = '".$_POST['estado']."' WHERE id = '".$_POST['id']."'";
+
+						if($class->consulta($sql)) {
+							$data = "1"; // DATOS GUARDADOS
+						} else {
+							$data = "4"; // ERROR EN LA BASE
+						}					
+					}
+					echo $data;
+			    } 
+			}
 		}
 	}
 

@@ -84,4 +84,14 @@
 		}
 		print_r(json_encode($lista));
 	}
+
+	if ($_POST['tipo'] == "cargarUsuarios") {				
+		$lista = array();
+		$sql = "SELECT id,nombres_completos,apellidos_completos FROM usuarios where estado = '1' order by id asc";
+		$sql = $class->consulta($sql);							
+		while ($row = $class->fetch_array($sql)) {
+			$lista[] = array('id' => $row[0], 'nombre' => ($row[2] .' '.$row[1]));
+		}
+		print_r(json_encode($lista));
+	}
 ?>

@@ -61,6 +61,10 @@
 		<script type="text/javascript" src="data/parametros/usuarios/app.js"></script>
 		<script type="text/javascript" src="data/parametros/catalogoBienes/app.js"></script>
 		<script type="text/javascript" src="data/parametros/planCuentas/app.js"></script>
+		<script type="text/javascript" src="data/parametros/formaAdquisicion/app.js"></script>
+		<script type="text/javascript" src="data/parametros/estadoBien/app.js"></script>
+
+		<script type="text/javascript" src="data/activosFijos/activos/app.js"></script>
 	</head>
 	<body class="skin-3 no-skin">
 		<div id="navbar" class="navbar navbar-default ace-save-state">
@@ -197,12 +201,16 @@
 		<script src="dist/js/tree.min.js"></script>
 		<script src="dist/js/jquery.blockUI.js"></script>
 		<script src="dist/js/lockr.min.js"></script>
-		
+		<script src="dist/js/bootstrap-datepicker.min.js"></script>
+		<script src="dist/js/spinbox.min.js"></script>
 		<!--[if lte IE 8]>
 		  <script src="dist/js/excanvas.min.js"></script>
 		<![endif]-->
 		
 		<style type="text/css">
+		.ui-jqdialog-content .form-view-data {
+	        white-space: normal !important;
+	    }
 			#tablas .table-bordered>tbody>tr>td {
 			    padding: 6px !important;
 			}

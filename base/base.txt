@@ -24,3 +24,45 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.plan_cuentas
     OWNER to postgres;
+
+-----forma adquisicion-----------
+-- Table: public.forma_adquisicion
+
+-- DROP TABLE public.forma_adquisicion;
+
+CREATE TABLE public.forma_adquisicion
+(
+    id integer NOT NULL DEFAULT nextval('forma_adquisicion_id_seq'::regclass),
+    nombre text COLLATE pg_catalog."default",
+    estado boolean,
+    fecha_creacion timestamp with time zone,
+    CONSTRAINT forma_adquisicion_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.forma_adquisicion
+    OWNER to postgres;
+
+---estado bien----
+-- Table: public.estado_bien
+
+-- DROP TABLE public.estado_bien;
+
+CREATE TABLE public.estado_bien
+(
+    id integer NOT NULL DEFAULT nextval('estado_bien_id_seq'::regclass),
+    nombres text COLLATE pg_catalog."default",
+    estado boolean,
+    fecha_creacion timestamp with time zone,
+    CONSTRAINT estado_bien_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.estado_bien
+    OWNER to postgres;

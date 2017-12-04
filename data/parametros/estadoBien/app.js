@@ -1,24 +1,22 @@
 angular.module('vadowApp')	 			
-	.controller('planCuentasController', function ($scope, $route, $http) {	
+	.controller('estadoBienController', function ($scope, $route, $http) {	
 		$scope.$route = $route;
-			
-		jQuery(function($) {			
-			$("#loading2").css("display","none");
-			$("#tabPlanCuentas").click(function(event) {
+
+		jQuery(function($) {				
+			$("#tabEstadoBien").click(function(event) {
 				event.preventDefault();  
 			});
-			$("#file_1").ace_file_input('reset_input');
 			var grid_selector = "#table";
 		    var pager_selector = "#pager";
 
 		    //cambiar el tamaño para ajustarse al tamaño de la página
 		    $(window).on('resize.jqGrid', function () {
-		        $(grid_selector).jqGrid('setGridWidth', $("#tabPlanCuentas").width() - 10);
+		        $(grid_selector).jqGrid('setGridWidth', $("#tabEstadoBien").width() - 10);
 		    });
 		    //cambiar el tamaño de la barra lateral collapse/expand
 		    var parent_column = $(grid_selector).closest('[class*="col-"]');
 		    $(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
-		        if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
+		        if(event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
 		            //para dar tiempo a los cambios de DOM y luego volver a dibujar!!!
 		            setTimeout(function() {
 		                $(grid_selector).jqGrid('setGridWidth', parent_column.width());
@@ -27,34 +25,26 @@ angular.module('vadowApp')
 		    });
 
 		    jQuery(grid_selector).jqGrid({
-		        url: 'data/parametros/planCuentas/appXml.php',
+		        url: 'data/parametros/estadoBien/appXml.php',
 		        autoencode: false,
 		        datatype: "xml",
 				height: 320,
-				colNames:['ID','CODIGO','CUENTA','NIVEL','DEBITO', 'CREDITO', 'DEVENGADO','COBRADO','ESTADO'],
+				colNames:['ID','NOMBRE','ESTADO'],
 				colModel:[
-					{name:'id',index:'id',align:'left', search:false, editable: true, hidden: true, editoptions: {readonly: 'readonly'}},					
-					{name:'codigo',index:'codigo',width:55, editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
-					{name:'cuenta',index:'cuenta',width:300, editable:true, editoptions:{size:"20", maxlength:"1000"}, editrules: {required: true}},
-					{name:'nivel',index:'nivel',width:40, align:'center',editable:true, editoptions:{size:"20", maxlength:"150"}, editrules: {required: true}},
-					{name:'debito',index:'debito',width:60, editable:true, editoptions:{size:"20", maxlength:"150"}, },
-					{name:'credito',index:'credito',width:60, editable:true, editoptions:{size:"20", maxlength:"150"}, },
-					{name:'devengado',index:'devengado',width:65, editable:true, editoptions:{size:"20", maxlength:"150"}, },
-					{name:'cobrado',index:'cobrado',width:60, editable:true, editoptions:{size:"20", maxlength:"150"}, },
-					{name:'estado',index:'estado',width:50,align:'center', editable:true, search:false, hidden: false, editoptions:{size:"20"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},					
-				],	
+					{name:'id',index:'id', frozen:true,align:'left', search:false ,editable: true, hidden: true, editoptions: {readonly: 'readonly'}},
+					{name:'nombre',index:'nombre',width:150, editable:true, editrules: {required: true}},
+					{name:'estado',index:'estado',align:'center',width:60, editable:true, search:false, hidden: false, editoptions:{size:"20"}, editrules: {required: true,edithidden:true},edittype:'checkbox',formatter: "checkbox",editoptions: { value:"1:0"}},
+				],
 		        rownumbers: true,
-		        rowNum: 100,
-		        shrinktofit :true,
-		        rowList:[200,400,1000],
+		        rowNum: 10,
+		        rowList:[10,20,30],
 		        pager: pager_selector,
-		        sortname: 'codigo',
+		        sortname: 'id',
 		        sortorder: 'asc',
 		        altRows: true,
 		        multiselect: false,
 		        multiboxonly: false,
 		        viewrecords: true,
-
 		        loadComplete: function() {
 		            var table = this;
 		            setTimeout(function() {
@@ -64,7 +54,7 @@ angular.module('vadowApp')
 		                enableTooltips(table);
 		            }, 0);
 		        },
-		        editurl: "data/parametros/planCuentas/app.php",		        
+		        editurl: "data/parametros/estadoBien/app.php",		        
 		    });
 		    $(window).triggerHandler('resize.jqGrid');//cambiar el tamaño para hacer la rejilla conseguir el tamaño correcto
 
@@ -111,18 +101,17 @@ angular.module('vadowApp')
 		        afterSubmit: function(response) {
 	                retorno = response.responseText;
 	                if(retorno == '1') {
-	                	$.gritter.add({			                
+	                	 $.gritter.add({			                
 			                title: 'Mensaje de Salida',			                
 			                text: 'Datos Modificados Correctamente',
 			                image: 'dist/images/confirm.png',
 			                class_name: 'gritter-light'
 			            });
-           			 } else {	                		
+           			 } else {
 	                	if(retorno == '2') {
-                			$("#id_bien").val("");
-	                		return [false,"Error.. Este id bien ya existe"];
-	                	}	
-		                
+	                		$("#nombre").val("");
+		                	return [false,"Error.. Este estado ya fue agregado"];
+		                }
 	                }
 	                return [true,'',retorno];
 	            },
@@ -147,11 +136,11 @@ angular.module('vadowApp')
 			                image: 'dist/images/confirm.png',
 			                class_name: 'gritter-light'
 			            });
-	                } else {	                		
+	                } else {
 	                	if(retorno == '2') {
-                			$("#id_bien").val("");
-	                		return [false,"Error.. Este id bien ya existe"];
-	                	}			                
+	                		$("#nombre").val("");
+		                	return [false,"Error.. Este estado ya fue agregado"];
+		                }
 	                }
 	                return [true,'',retorno];
 	            },
@@ -167,9 +156,7 @@ angular.module('vadowApp')
 		            style_delete_form(form);
 		            form.data('styled', true);
 		        },
-		        onClick : function(e) {
-		      
-		        }
+		        onClick: function(e) { }
 		    },
 		    {
 		        recreateForm: true,
@@ -179,7 +166,7 @@ angular.module('vadowApp')
 		            form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
 		            style_search_form(form);
 		        },
-		        afterRedraw: function() {
+		        afterRedraw: function(){
 		            style_search_filters($(this));
 		        },
 		        multipleSearch: false,
@@ -189,17 +176,16 @@ angular.module('vadowApp')
 		    },
 		    {
 		        recreateForm: true,
-		        overlay:true,
+		        overlay: true,
 		        beforeShowForm: function(e) {
 		            var form = $(e[0]);
 		            form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
 		        }
 		    })
 
-		    function style_edit_form(form) {		        
+		    function style_edit_form(form) {
 		        form.find('input[name=stock]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
 		                
-		        //update buttons classes
 		        var buttons = form.next().find('.EditButton .fm-button');
 		        buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide();//ui-icon, s-icon
 		        buttons.eq(0).addClass('btn-primary').prepend('<i class="ace-icon fa fa-check"></i>');
@@ -224,6 +210,7 @@ angular.module('vadowApp')
 		        form.find('.add-group').addClass('btn btn-xs btn-success');
 		        form.find('.delete-group').addClass('btn btn-xs btn-danger');
 		    }
+		    
 		    function style_search_form(form) {
 		        var dialog = form.closest('.ui-jqdialog');
 		        var buttons = dialog.find('.EditTable')
@@ -231,14 +218,17 @@ angular.module('vadowApp')
 		        buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
 		        buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
 		    }
+		    
 		    function beforeDeleteCallback(e) {
 		        var form = $(e[0]);
 		        if(form.data('styled')) return false;
 		        
 		        form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
 		        style_delete_form(form);
+		        
 		        form.data('styled', true);
 		    }
+		    
 		    function beforeEditCallback(e) {
 		        var form = $(e[0]);
 		        form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
@@ -249,14 +239,14 @@ angular.module('vadowApp')
 		    
 		    function updateActionIcons(table) { }
 		    
-		    function updatePagerIcons(table) {
+		    function updatePagerIcons(table) { 
 		        var replacement = {
 		            'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
 		            'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
 		            'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
 		            'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
 		        };
-		        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+		        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function() {
 		            var icon = $(this);
 		            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
 		            
@@ -272,44 +262,6 @@ angular.module('vadowApp')
 		    $(document).one('ajaxloadstart.page', function(e) {
 		        $(grid_selector).jqGrid('GridUnload');
 		        $('.ui-jqdialog').remove();
-		    });
-
-		    $("#btn_2").on("click",function(){
-		    	$("#loading2").css("display","block");
-				var archivos = document.getElementById("file_1");				
-		    	var archivo = archivos.files;
-		    	var archivos = new FormData(document.getElementById("formPlanCuentas"));
-		    	
-				$.ajax({
-			        url: "data/parametros/planCuentas/app.php?cargarDatos="+"cargarDatos",
-			        type: "POST",			        			        
-			        contentType:false,			        			        
-			        data: archivos,        
-			        processData:false,
-			        cache:false,    
-			        //async: true,
-
-			        success: function(data) {	
-			        	$("#loading2").css("display","none");
-			        	if(data == 1){
-			        		$.gritter.add({			                
-				                title: 'Mensaje de Salida',			                
-				                text: 'Plan de Cuentas Agregado Correctamente',
-				                image: 'dist/images/confirm.png',
-				                class_name: 'gritter-light'
-				            });	
-				            $('#table').trigger('reloadGrid');
-			        	}else{
-
-			        	}
-			        },
-			        error: function (xhr, status, errorThrown) {
-				        alert("Hubo un problema!");
-				        console.log("Error: " + errorThrown);
-				        console.log("Status: " + status);
-				        console.dir(xhr);
-			        }
-			    });
 		    });
 		});	
 	})

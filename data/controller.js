@@ -75,5 +75,23 @@ app.config(function($routeProvider) {
             activetab: 'planCuentas',
             authorize: true
         })
+        .when('/formaAdquisicion', {
+            templateUrl : 'data/parametros/formaAdquisicion/app.html',
+            controller  : 'formaAdquisicionController',
+            activetab: 'formaAdquisicion',
+            authorize: true
+        })
+        .when('/estadoBien', {
+            templateUrl : 'data/parametros/estadoBien/app.html',
+            controller  : 'estadoBienController',
+            activetab: 'estadoBien',
+            authorize: true
+        })
+         .when('/activos', {
+            templateUrl : 'data/activosFijos/activos/app.html',
+            controller  : 'activosController',
+            activetab: 'activos',
+            authorize: true
+        })
         .otherwise("/");                               
 })
