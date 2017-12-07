@@ -5,46 +5,25 @@
 	$fecha = $class->fecha_hora();
 	$data = 0;
 
-	if ($_POST['oper'] == "add") {
-		$sql = "SELECT count(*)count FROM tipo_bien WHERE nombre = UPPER('".$_POST['nombre']."')";
+	if ($_POST['tipo'] == "Guardar Datos") {				
+		$id = $class->idz();	
+		$sql = "SELECT count(*)count FROM activo_fijo WHERE codigo = UPPER('".$_POST['codigo']."')";
 		$sql = $class->consulta($sql);		
 		while ($row = $class->fetch_array($sql)) {
 			$data = $row[0];
 		}
-
 		if ($data != 0) {
-			$data = "2"; //REPETIDO
+			echo  "2";///REPETIDO
 		} else {
-			$sql = "INSERT INTO tipo_bien VALUES ('".$id."','".$_POST['nombre']."','".$_POST['estado']."','".$fecha."','".$_POST['codigo']."')";
-
-			if($class->consulta($sql)) {
-				$data = "1"; // DATOS GUARDADOS	
-			} else {
-				$data = "4"; // ERROR EN LA BASE
-			}
+			$sql = "INSERT INTO activo_fijo VALUES ('".$id."','".$_POST['codigo']."','".$_POST['descripcion']."','".$_POST['fechaAdquisicion']."','".$_POST['responsable']."','".$_POST['cuenta']."','".$_POST['formaAdquisicion']."','".$_POST['estadoBien']."','".$_POST['costo']."','".$_POST['serie']."','".$_POST['modelo']."','".$_POST['marca']."','".$_POST['vidaUtil']."','".$_POST['estado']."','".$fecha."','".$_POST['nombreActivo']."')";		
+			//echo $sql;
+			if($class->consulta($sql)){
+				echo 1;	//DATOS Guardado			
+			}else{
+				echo 4;	//Error en la base
+			}	
 		}
-	} else {
-	    if ($_POST['oper'] == "edit") {
-	    	$sql = "SELECT count(*)count FROM tipo_bien WHERE nombre = UPPER('".$_POST['nombre']."') AND id NOT IN ('".$_POST['id']."')";	
-			$sql = $class->consulta($sql);			
-	    	
-			while ($row = $class->fetch_array($sql)) {
-				$data = $row[0];
-			}
-
-			if ($data != 0) {
-			 	$data = "2"; // REPETIDO
-			} else {		
-				$sql = "UPDATE tipo_bien SET nombre = '".$_POST['nombre']."', estado = '".$_POST['estado']."', codigo  = '".$_POST['codigo']."' WHERE id = '".$_POST['id']."'";
-
-				if($class->consulta($sql)) {
-					$data = "1"; // DATOS GUARDADOS
-				} else {
-					$data = "4"; // ERROR EN LA BASE
-				}
-			}
-	    }
+		
 	}
-
-	echo $data;
+	
 ?>

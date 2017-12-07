@@ -1,6 +1,7 @@
 angular.module('vadowApp')	 			
 	.controller('activosController', function ($scope, $route, $http) {	
 		$scope.$route = $route;
+		$scope.buttonText = "Guardar Datos";
 		var d = new Date();
 		var currDate = d.getDate();
 		var currMonth = d.getMonth() + 1;
@@ -92,6 +93,88 @@ angular.module('vadowApp')
 		$scope.fecthRecipientsAdquisicion();
 		$scope.fecthRecipientsEstado();
 
+		$scope.submitForm = function(){
+			if ($scope.formActivos.$valid) {				
+			 	var data = $.param({
+                	codigo: undefinedFunction($scope.Activos.txt_1),
+                	nombreActivo: undefinedFunction($scope.Activos.txt_2),
+                	descripcion: undefinedFunction($scope.Activos.txt_3),
+                	fechaAdquisicion: undefinedFunction($scope.Activos.txt_4),
+                	responsable: $("#select_responsable").val(),
+                	cuenta: $("#select_cuenta").val(),
+                	formaAdquisicion: $("#select_adquisicion").val(),
+                	estadoBien: $("#select_estadoBien").val(),
+                	costo: $scope.formActivos.txt_5.viewValue,
+                	serie: undefinedFunction($scope.Activos.txt_6),
+                	modelo: undefinedFunction($scope.Activos.txt_7),
+                	marca: undefinedFunction($scope.Activos.txt_8),
+                	vidaUtil: $("#txt_9").val(),
+                	estado: $("#select_estado").val(),
+					tipo: $scope.buttonText
+            	});	
+            	
+				$http({
+			        url: 'data/activosFijos/activos/app.php',
+			        method: "POST",
+			        data: data,
+			        headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                    }			        
+			    })
+			    .then(function(response) {
+			    	if(response.data == 1){			    		
+			    		$scope.Activos = {};
+			    		$scope.formActivos.$setPristine();			    		
+			    		$scope.buttonText = "Guardar Datos";
+			    		$("#select_responsable").val("");
+				    	$("#select_responsable").trigger('chosen:updated');	
+				    	$("#select_cuenta").val("");
+				    	$("#select_cuenta").trigger('chosen:updated');	
+				    	$("#select_adquisicion").val("");
+				    	$("#select_adquisicion").trigger('chosen:updated');	
+				    	$("#select_estadoBien").val("");
+				    	$("#select_estadoBien").trigger('chosen:updated');	
+			    		bootbox.dialog({
+							message: "Datos Agregados Correctamente", 
+							buttons: {
+								"success" : {
+									"label" : "Aceptar",
+									"className" : "btn-sm btn-primary"
+								}
+							}
+						});
+			    	}
+			    	else{
+			    		if(response.data == 2){	
+				    		bootbox.dialog({
+								message: "Error! El número de código no se encuentra disponible", 
+								buttons: {
+									"success" : {
+										"label" : "Aceptar",
+										"className" : "btn-sm btn-warning"
+									}
+								}
+							});
+				    	}else{
+				    		bootbox.dialog({
+								message: "Error! Al intentar guardar los Datos. Comuniquese con el Administrador", 
+								buttons: {
+									"danger" : {
+										"label" : "Aceptar",
+										"className" : "btn-sm btn-danger"
+									}
+								}
+							});
+			    		}
+			    	}
+			    }, 
+			    function(response) { // optional
+			            // failed
+			    });
+			}else{
+				
+			}
+		};
 		jQuery(function($) {			
 			$("#tabActivos").click(function(event) {
 				event.preventDefault();  
@@ -146,10 +229,18 @@ angular.module('vadowApp')
 	            autoclose: true,
 	            format: "dd/mm/yyyy",
 	            todayHighlight: true,
-	            language: 'es',
-	            startDate: '1d',
+	            language: 'es',	            
 	            endDate: '1d'
 	        }).datepicker();	
 
 		});	
+
+		function undefinedFunction(val){
+			if(val == 'undefined'){
+				console.log(val)
+				return val = '';
+			}else{
+				return val;
+			}
+		}	
 	})
