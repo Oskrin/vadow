@@ -71,3 +71,38 @@ app.config(function($routeProvider) {
         })
         .otherwise("/");                               
 })
+
+app.directive('ngFiles', ['$parse', function ($parse) {
+    function fn_link(scope, element, attrs) {
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+            onChange(scope, { $files: event.target.files });
+        });
+    };
+    return {
+     link: fn_link
+    }
+}])
+
+app.directive("fileinput", [function() {
+    return {
+        scope: {
+            fileinput: "=",
+            filepreview: "="
+        },
+        link: function(scope, element, attributes) {                
+            element.bind("change", function(changeEvent) {                                      
+                scope.fileinput = changeEvent.target.files[0];                                      
+                var reader = new FileReader();                  
+                reader.onload = function(loadEvent) {                       
+                    scope.$apply(function() {                           
+                        scope.filepreview = loadEvent.target.result;
+                    });
+                }                   
+                if(scope.fileinput) {
+                    reader.readAsDataURL(scope.fileinput);
+                }
+            });
+        }
+    }
+}])

@@ -31,15 +31,15 @@
         $start = 0;
     
     if ($search == 'false') {
-        $SQL = "SELECT id, id_tipo_identificacion, identificacion, nombres_completos, apellidos_completos, telf_fijo, telf_movil, direccion, correo, genero, id_cargo, usuario, password, foto, numero_verificador, estado::int FROM usuarios ORDER BY $sidx $sord limit $limit offset $start";
+        $SQL = "SELECT id, id_tipo_identificacion, identificacion, nombres_completos, telf_fijo, telf_movil, id_ciudad, direccion, correo, genero, id_cargo, usuario, clave, foto, numero_verificador, estado::int FROM usuarios ORDER BY $sidx $sord limit $limit offset $start";
     } else {
         $campo = $_GET['searchField'];
       
         if ($_GET['searchOper'] == 'eq') {
-            $SQL = "SELECT id, id_tipo_identificacion, identificacion, nombres_completos, apellidos_completos, telf_fijo, telf_movil, direccion, correo, genero, id_cargo, usuario, password, foto, numero_verificador, estado::int FROM usuarios WHERE $campo = '".$_GET['searchString']."' ORDER BY $sidx $sord limit $limit offset $start";
+            $SQL = "SELECT id, id_tipo_identificacion, identificacion, nombres_completos, telf_fijo, telf_movil, id_ciudad, direccion, correo, genero, id_cargo, usuario, clave, foto, numero_verificador, estado::int FROM usuarios WHERE $campo = '".$_GET['searchString']."' ORDER BY $sidx $sord limit $limit offset $start";
         }         
         if ($_GET['searchOper'] == 'cn') {
-            $SQL = "SELECT id, id_tipo_identificacion, identificacion, nombres_completos, apellidos_completos, telf_fijo, telf_movil, direccion, correo, genero, id_cargo, usuario, password, foto, numero_verificador, estado::int FROM usuarios WHERE $campo like '%$_GET[searchString]%' ORDER BY $sidx $sord limit $limit offset $start";
+            $SQL = "SELECT id, id_tipo_identificacion, identificacion, nombres_completos, telf_fijo, telf_movil, id_ciudad, direccion, correo, genero, id_cargo, usuario, clave, foto, numero_verificador, estado::int FROM usuarios WHERE $campo like '%$_GET[searchString]%' ORDER BY $sidx $sord limit $limit offset $start";
         }
     }  
 
