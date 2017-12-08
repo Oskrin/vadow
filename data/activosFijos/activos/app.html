@@ -1,0 +1,189 @@
+<div class="main-content-inner">
+	<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+		<ul class="breadcrumb">
+			<li>
+				<i class="ace-icon fa fa-home home-icon"></i>
+				<a href="#!/">Inicio</a>
+			</li>
+			<li class="active">Activos Fijos</li>			
+			<li class="active">Activos Fijos</li>
+		</ul>
+	</div>
+	<div class="page-content" >
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<i class="fa fa-edit"> </i> Activos Fijos
+					</div>
+				    <div class="panel-body">				    	
+				    	<div class="col-md-12 col-sm-12 col-xs-12">				    		
+							<div class="tabbable">
+								<ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="tabActivos">
+									<li class="active">
+										<a data-toggle="tab" href="#detalles">Detalles</a>
+									</li>
+									<li>
+										<a data-toggle="tab" href="#adicionales">Adicionales</a>
+									</li>
+								</ul>								
+								<form class="form-horizontal" role="form" name="formActivos" ng-submit="submitForm(formActivos.$valid)" novalidate>
+									<div class="tab-content">
+										<div id="detalles" class="tab-pane in active">
+											<div class="form-group" ng-class="{ 'has-error' : formActivos.txt_1.$invalid && !formActivos.txt_1.$pristine }">
+												<label for="txt_1" class="col-sm-3 col-xs-12 control-label bolder">Código:</label>
+											    <div class="col-sm-9 col-xs-12">
+											 	   	<input type="text" class="form-control" name="txt_1" placeholder="Código" ng-model="Activos.txt_1" required />
+											       	<p style="margin-bottom: -5px;" ng-show="formActivos.txt_1.$invalid && !formActivos.txt_1.$pristine" class="help-block">Este campo es Obligatorio.</p>
+											    </div>											    
+											</div>
+
+											<div class="form-group" ng-class="{ 'has-error' : formActivos.txt_2.$invalid && !formActivos.txt_2.$pristine }">
+												<label for="txt_2" class="col-sm-3 col-xs-12 control-label bolder">Nombre Activo:</label>
+											    <div class="col-sm-9 col-xs-12">
+											 	   	<input type="text" class="form-control" name="txt_2" placeholder="Nombre Activo" ng-model="Activos.txt_2" />
+											       	<p style="margin-bottom: -5px;" ng-show="formActivos.txt_2.$invalid && !formActivos.txt_2.$pristine" class="help-block">Este campo es Obligatorio.</p>
+											    </div>											    
+											</div>
+
+											<div class="form-group" ng-class="{ 'has-error' : formActivos.txt_3.$invalid && !formActivos.txt_3.$pristine }">
+												<label for="txt_3" class="col-sm-3 col-xs-12 control-label bolder">Descripción:</label>
+											    <div class="col-sm-9 col-xs-12">
+											 	   	<input type="text" class="form-control" name="txt_3" placeholder="Descripción" ng-model="Activos.txt_3" />
+											       	<p style="margin-bottom: -5px;" ng-show="formActivos.txt_3.$invalid && !formActivos.txt_3.$pristine" class="help-block">Este campo es Obligatorio.</p>
+											    </div>											    
+											</div>
+											
+											<div class="form-group" ng-class="{ 'has-error' : formActivos.txt_4.$invalid && !formActivos.txt_4.$pristine }">
+												<label for="txt_4" class="col-sm-3 col-xs-12 control-label bolder">Fecha Adquisición:</label>
+											    <div class="col-sm-9 col-xs-12">
+											    	<div class='input-group date' id='txt_4'>
+												 		<input type="text" class="form-control" name="txt_4" placeholder="Fecha de Emisión (dd/mm/YYYY)" ng-model="Activos.txt_4" ng-readonly="true" required >
+												 	    <span class="input-group-addon">
+									                        <span class="glyphicon glyphicon-calendar"></span>
+									                    </span>														 	   
+											 	    </div>											 	   	
+											    </div>											    
+											</div>											
+											
+											<div class="form-group">
+												<label for="select_responsable" class="col-sm-3 col-xs-12 control-label bolder">Responsable:</label>
+											    <div class="col-sm-9">
+													<select id="select_responsable" name="select_responsable" tabindex="8" class="chosen-select form-control" data-placeholder="Seleccione un Responsable" chosen ng-model="recipients" ng-options = "recipient.id as recipient.title  for recipient in recipientsList track by recipient.id" required="">
+														<option></option>	
+													</select>												 	   
+											    </div>
+											</div>
+
+											<div class="form-group">
+												<label for="select_cuenta" class="col-sm-3 col-xs-12 control-label bolder">Cuenta:</label>
+											    <div class="col-sm-9">
+													<select id="select_cuenta" name="select_cuenta" tabindex="8" class="chosen-select form-control" data-placeholder="Seleccione una Cuenta" chosen ng-model="recipientsCuentas" ng-options = "recipientCuentas.id as recipientCuentas.title  for recipientCuentas in recipientsCuentasList track by recipientCuentas.id" required="">	
+														<option></option>
+													</select>												 	   
+											    </div>
+											</div>
+
+											<div class="form-group">
+												<label for="select_adquisicion" class="col-sm-3 col-xs-12 control-label bolder">Forma Adquisición:</label>
+											    <div class="col-sm-9">
+													<select id="select_adquisicion" name="select_adquisicion" tabindex="8" class="chosen-select form-control" data-placeholder="Forma de Adquisición" chosen ng-model="recipientsAdquisicion" ng-options = "recipientAdquisicion.id as recipientAdquisicion.title  for recipientAdquisicion in recipientsAdquisicionList track by recipientAdquisicion.id" required="">
+														<option></option>	
+													</select>												 	   
+											    </div>
+											</div>
+
+											<div class="form-group">
+												<label for="select_estadoBien" class="col-sm-3 col-xs-12 control-label bolder">Estado del Bien:</label>
+											    <div class="col-sm-9">
+													<select id="select_estadoBien" name="select_estadoBien" tabindex="8" class="chosen-select form-control" data-placeholder="Estado del Bien" chosen ng-model="recipientsEstado" ng-options = "recipientEstado.id as recipientEstado.title  for recipientEstado in recipientsEstadoList track by recipientEstado.id" required="">	
+														<option></option>	
+													</select>												 	   
+											    </div>
+											</div>
+
+											<div class="form-group">
+												<label for="" class="col-sm-3 col-xs-12 control-label bolder"></label>
+											    <div class="col-sm-3">
+													<button type="submit" id="btn_1" name="btn_1" class="btn btn-sm btn-primary" ng-disabled="formActivos.$invalid"><i class="ace-icon fa fa-save"></i>									
+														{{buttonText}}														
+													</button>
+											    </div>
+											    <div class="col-sm-3">
+													<button type="button" id="btn_2" name="btn_2" class="btn btn-sm btn-success" ><i class="ace-icon fa fa-search"></i>									
+														Buscar Activo														
+													</button>
+											    </div>
+											</div>							
+										</div>	
+										<div id="adicionales" class="tab-pane">											
+											<div class="form-group" ng-class="{ 'has-error' : formActivos.txt_5.$invalid && !formActivos.txt_5.$pristine }">
+												<label for="txt_5" class="col-sm-3 col-xs-12 control-label bolder">Costo:</label>
+											    <div class="col-sm-9 col-xs-12">
+											 	   	<input type="text" class="form-control" name="txt_5" placeholder="Costo" ng-model="Activos.txt_5"  ng-pattern="/^\d+(?:[.,]\d+)?$/" />
+											       	<p style="margin-bottom: -5px;" ng-show="formActivos.txt_5.$invalid && !formActivos.txt_5.$pristine" class="help-block">Este campo es Obligatorio (Números).</p>
+											    </div>
+											</div>											
+
+											<div class="form-group" >
+												<label for="txt_6" class="col-sm-3 col-xs-12 control-label bolder">Número de Serie:</label>
+											    <div class="col-sm-9 col-xs-12">
+											 	   	<input type="text" class="form-control" name="txt_6" placeholder="Número de Serie" ng-model="Activos.txt_6" />
+											    </div>
+											</div>
+
+											<div class="form-group">
+												<label for="txt_7" class="col-sm-3 col-xs-12 control-label bolder">Modelo:</label>
+											    <div class="col-sm-9 col-xs-12">
+											 	   	<input type="text" class="form-control" name="txt_7" placeholder="Modelo" ng-model="Activos.txt_7" />											       	
+											    </div>
+											</div>
+
+											<div class="form-group">
+												<label for="txt_8" class="col-sm-3 col-xs-12 control-label bolder">Marca:</label>
+											    <div class="col-sm-9 col-xs-12">
+											 	   	<input type="text" class="form-control" name="txt_8" placeholder="Marca" ng-model="Activos.txt_8" />
+											    </div>
+											</div>
+
+											<div class="form-group">
+												<label for="txt_9" class="col-sm-3 col-xs-12 control-label bolder">Vida Útil (Años):</label>
+											    <div class="col-sm-9 col-xs-12">
+											 	   	<input type="text" class="form-control" id="txt_9" name="txt_9" placeholder="Vida Útil" ng-keypress="soloNumeros($event)" ng-model="Activos.txt_9" />											       	
+											    </div>
+											</div>	
+
+											<div class="form-group">
+												<label for="select_estado" class="col-sm-3 col-xs-12 control-label bolder">Estado:</label>
+											    <div class="col-sm-9">
+													<select id="select_estado" name="select_estado" tabindex="8" class="chosen-select form-control" data-placeholder="Estado">	
+														<option value="1">Activo</option>
+														<option value="0">Inactivo</option>
+													</select>												 	   
+											    </div>
+											</div>
+
+											<div class="form-group">
+												<label for="" class="col-sm-3 col-xs-12 control-label bolder"></label>
+											    <div class="col-sm-3">
+													<button type="submit" id="btn_1" name="btn_1" class="btn btn-sm btn-primary" ng-disabled="formActivos.$invalid"><i class="ace-icon fa fa-save"></i>									
+														{{buttonText}}														
+													</button>
+											    </div>
+											    <div class="col-sm-3">
+													<button type="button" id="btn_2" name="btn_2" class="btn btn-sm btn-success" ><i class="ace-icon fa fa-search"></i>									
+														Buscar Activo														
+													</button>
+											    </div>
+											</div>							
+										</div>								
+									</div>
+								</form>
+							</div>
+				    	</div>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

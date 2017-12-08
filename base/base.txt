@@ -1,0 +1,118 @@
+-- Table: public.plan_cuentas
+
+-- DROP TABLE public.plan_cuentas;
+
+CREATE TABLE public.plan_cuentas
+(
+    id integer NOT NULL DEFAULT nextval('plan_cuentas_id_seq'::regclass),
+    codigo text COLLATE pg_catalog."default",
+    cuenta text COLLATE pg_catalog."default",
+    nivel integer,
+    debito text COLLATE pg_catalog."default",
+    credito text COLLATE pg_catalog."default",
+    devengado text COLLATE pg_catalog."default",
+    cobrado text COLLATE pg_catalog."default",
+    fecha_creacion timestamp with time zone,
+    estado boolean,
+    fecha_actualizacion timestamp with time zone,
+    CONSTRAINT plan_cuentas_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.plan_cuentas
+    OWNER to postgres;
+
+-----forma adquisicion-----------
+-- Table: public.forma_adquisicion
+
+-- DROP TABLE public.forma_adquisicion;
+
+CREATE TABLE public.forma_adquisicion
+(
+    id integer NOT NULL DEFAULT nextval('forma_adquisicion_id_seq'::regclass),
+    nombre text COLLATE pg_catalog."default",
+    estado boolean,
+    fecha_creacion timestamp with time zone,
+    CONSTRAINT forma_adquisicion_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.forma_adquisicion
+    OWNER to postgres;
+
+---estado bien----
+-- Table: public.estado_bien
+
+-- DROP TABLE public.estado_bien;
+
+CREATE TABLE public.estado_bien
+(
+    id integer NOT NULL DEFAULT nextval('estado_bien_id_seq'::regclass),
+    nombres text COLLATE pg_catalog."default",
+    estado boolean,
+    fecha_creacion timestamp with time zone,
+    CONSTRAINT estado_bien_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.estado_bien
+    OWNER to postgres;
+
+
+    ----------activos----------
+    -- Table: public.activo_fijo
+
+-- DROP TABLE public.activo_fijo;
+
+CREATE TABLE public.activo_fijo
+(
+    id text COLLATE pg_catalog."default" NOT NULL,
+    codigo text COLLATE pg_catalog."default",
+    descripcion text COLLATE pg_catalog."default",
+    fecha_adquisicion text COLLATE pg_catalog."default",
+    responsable text COLLATE pg_catalog."default",
+    id_cuenta integer,
+    id_adquisicion integer,
+    id_estado_bien integer,
+    costo text COLLATE pg_catalog."default",
+    numero_serie text COLLATE pg_catalog."default",
+    modelo text COLLATE pg_catalog."default",
+    marca text COLLATE pg_catalog."default",
+    vida text COLLATE pg_catalog."default",
+    estado boolean,
+    fecha_creacion timestamp with time zone,
+    nombre_activo text COLLATE pg_catalog."default",
+    CONSTRAINT activo_fijo_pkey PRIMARY KEY (id),
+    CONSTRAINT "FK_adquisicion_activo" FOREIGN KEY (id_adquisicion)
+        REFERENCES public.forma_adquisicion (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT "FK_cuenta_activo" FOREIGN KEY (id_cuenta)
+        REFERENCES public.plan_cuentas (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT "FK_estado_activo" FOREIGN KEY (id_estado_bien)
+        REFERENCES public.estado_bien (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT "FK_responsable_usuario" FOREIGN KEY (responsable)
+        REFERENCES public.usuarios (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.activo_fijo
+    OWNER to postgres;
