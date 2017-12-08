@@ -4,19 +4,11 @@
     }
 
 	include_once('../../../admin/class.php');
+	include_once('../../../admin/datos_sri.php');
+	include_once('../../../admin/datos_cedula.php');
 	$class = new constante();
 	$id = $class->idz();
 	$fecha = $class->fecha_hora();
-	
-	if ($_POST['tipo'] == "cargarTipoIdentificacion") {				
-		$lista = array();
-		$sql = "SELECT id,codigo, nombre FROM tipo_identificacion where estado = '1' order by id asc";
-		$sql = $class->consulta($sql);							
-		while ($row = $class->fetch_array($sql)) {
-			$lista[] = array('id' => $row[0], 'nombre' => ($row[1] .' - '.$row[2]));
-		}
-		print_r(json_encode($lista));
-	}
 
 	if ($_POST['tipo'] == "Guardar Datos") {		
 		$pass = md5($_POST['clave']);								
@@ -39,7 +31,7 @@
 	            }      	
 			}
 
-			$resp = "INSERT INTO usuarios VALUES ('".$id."','".$_POST['tipoIdentificacion']."','".$_POST['identificacion']."','".$_POST['nombres']."','".$_POST['apellidos']."','".$_POST['fijo']."','".$_POST['movil']."','".$_POST['direccion']."','".$_POST['correo']."','".$_POST['genero']."','".$_POST['cargo']."','".$_POST['usuario']."','".$pass."','".$dirFoto."','0','".$_POST['estado']."','".$fecha."');";
+			$resp = "INSERT INTO usuarios VALUES ('".$id."','".$_POST['tipoIdentificacion']."','".$_POST['identificacion']."','".$_POST['nombres_completos']."','".$_POST['fijo']."','".$_POST['movil']."','".$_POST['ciudad']."','".$_POST['direccion']."','".$_POST['correo']."','".$_POST['genero']."','".$_POST['cargo']."','".$_POST['usuario']."','".$pass."','".$dirFoto."','0','".$_POST['estado']."','".$fecha."');";
 
 			if($class->consulta($resp)) {
 				echo 1;	// DATOS GUARDADOS
@@ -75,7 +67,34 @@
 			}		
 		}							
 	}
-	
+
+	if ($_POST['tipo'] == "cargarTipoIdentificacion") {				
+		$sql = "SELECT id,codigo, nombre FROM tipo_identificacion where estado = '1' order by id asc";
+		$sql = $class->consulta($sql);							
+		while ($row = $class->fetch_array($sql)) {
+			$lista[] = array('id' => $row[0], 'nombre' => ($row[1] .' - '.$row[2]));
+		}
+		print_r(json_encode($lista));
+	}
+
+	if ($_POST['tipo'] == "cargarProvincias") {		
+		$sql = "SELECT id, nombre_provincia FROM provincia order by id asc";
+		$sql = $class->consulta($sql);		
+		while ($row = $class->fetch_array($sql)) {
+			$lista[] = array('id' => $row[0], 'nombre' => $row[1]);
+		}
+		print_r(json_encode($lista));
+	}
+
+	if ($_POST['tipo'] == "cargarCiudades") {		
+		$sql = "SELECT id, nombre_ciudad FROM ciudad WHERE id_provincia = '$_POST[id]' order by id asc";
+		$sql = $class->consulta($sql);		
+		while ($row = $class->fetch_array($sql)) {
+			$lista[] = array('id' => $row[0], 'nombre' => $row[1]);
+		}
+		print_r(json_encode($lista));
+	}
+
 	if ($_POST['tipo'] == "cargarCargos") {		
 		$sql = "SELECT id, nombre_cargo FROM cargos order by id asc";
 		$sql = $class->consulta($sql);		
@@ -84,6 +103,26 @@
 		}
 		print_r(json_encode($lista));
 	}
+
+	if (isset($_POST['consulta_ruc'])) {
+		$ruc = $_POST['txt_ruc'];
+		$servicio = new ServicioSRI();///creamos nuevo objeto de servicios SRI
+		$datosEmpresa = $servicio->consultar_ruc($ruc); ////accedemos a la funcion datosSRI
+		$establecimientos = $servicio->establecimientoSRI($ruc);
+
+		print_r(json_encode(['datosEmpresa'=>$datosEmpresa,'establecimientos'=>$establecimientos]));		
+	}
+	// fin
+
+	// consultar cedula
+	if (isset($_POST['consulta_cedula'])) {
+		$ruc = $_POST['txt_ruc'];
+		$servicio = new DatosCedula();///creamos nuevo objeto de antecedentes
+		$datosCedula = $servicio->consultar_cedula($ruc); ////accedemos a la funcion datosSRI
+
+		print_r(json_encode(['datosPersona'=>$datosCedula]));		
+	}
+	// fin
 
 	if ($_POST['tipo'] == "cargarUsuarios") {				
 		$lista = array();
@@ -94,4 +133,5 @@
 		}
 		print_r(json_encode($lista));
 	}
+
 ?>

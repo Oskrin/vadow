@@ -29,18 +29,18 @@
 
 		$resultado = $class->consulta("
 										SELECT * FROM usuarios U  
-										where U.usuario = '".$_POST['txt_nombre']."' and password = md5('".$_POST['txt_clave']."')");
+										where U.usuario = '".$_POST['txt_nombre']."' and clave = md5('".$_POST['txt_clave']."')");
 		
 
 		if($class->num_rows($resultado) == 1) {
 			$row = $class->fetch_array($resultado);
 			$_SESSION['userVadow'] = array(	'id'=>$row[0], 
-										'name' => $row[3]. ' '.$row[4], 
+										'name' => $row[3], 
 										'usuario' => $row[11], 
 										'cargo' => $row[10], 
 										'imagen' => $row[13]);
 
-			print_r(json_encode(array('status' => 'ok', 'id' => $row[0], 'name' => $row[3]. ' '.$row[4] , 'usuario' => $row[11], 'imagen' => $row[13])));
+			print_r(json_encode(array('status' => 'ok', 'id' => $row[0], 'name' => $row[3] , 'usuario' => $row[11], 'imagen' => $row[13])));
 		} else {
 			print_r(json_encode(array('status' => 'error', 'problem' => 'usuario invalido')));
 		}		
