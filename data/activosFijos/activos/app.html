@@ -26,6 +26,9 @@
 									<li>
 										<a data-toggle="tab" href="#adicionales">Adicionales</a>
 									</li>
+									<li>
+										<a data-toggle="tab" href="#depreciacion">Depreciación</a>
+									</li>
 								</ul>								
 								<form class="form-horizontal" role="form" name="formActivos" ng-submit="submitForm(formActivos.$valid)" novalidate>
 									<div class="tab-content">
@@ -58,7 +61,7 @@
 												<label for="txt_4" class="col-sm-3 col-xs-12 control-label bolder">Fecha Adquisición:</label>
 											    <div class="col-sm-9 col-xs-12">
 											    	<div class='input-group date' id='txt_4'>
-												 		<input type="text" class="form-control" name="txt_4" placeholder="Fecha de Emisión (dd/mm/YYYY)" ng-model="Activos.txt_4" ng-readonly="true" required >
+												 		<input type="text" class="form-control"  name="txt_4" placeholder="Fecha de Emisión (dd/mm/YYYY)" ng-model="Activos.txt_4" ng-readonly="true" required >
 												 	    <span class="input-group-addon">
 									                        <span class="glyphicon glyphicon-calendar"></span>
 									                    </span>														 	   
@@ -116,11 +119,12 @@
 											    </div>
 											</div>							
 										</div>	
-										<div id="adicionales" class="tab-pane">											
+										<div id="adicionales" class="tab-pane">			
+																		
 											<div class="form-group" ng-class="{ 'has-error' : formActivos.txt_5.$invalid && !formActivos.txt_5.$pristine }">
 												<label for="txt_5" class="col-sm-3 col-xs-12 control-label bolder">Costo:</label>
 											    <div class="col-sm-9 col-xs-12">
-											 	   	<input type="text" class="form-control" name="txt_5" placeholder="Costo" ng-model="Activos.txt_5"  ng-pattern="/^\d+(?:[.,]\d+)?$/" ng-change="valueChanged()" />
+											 	   	<input type="text" class="form-control" name="txt_5" placeholder="Costo" ng-model="Activos.txt_5"  ng-pattern="/^\d+(?:[.,]\d+)?$/" ng-change="valueChanged()" required/>
 											       	<p style="margin-bottom: -5px;" ng-show="formActivos.txt_5.$invalid && !formActivos.txt_5.$pristine" class="help-block">Este campo es Obligatorio (Números).</p>
 											    </div>
 											</div>
@@ -184,6 +188,28 @@
 													</button>
 											    </div>
 											</div>							
+										</div>		
+										<div id="depreciacion" class="tab-pane">
+											<div class="form-group" >
+												<div class="col-xs-12">
+													<table id="tabla_depreciacion" class="table  table-bordered table-hover">
+														<thead>
+															<tr>																
+																<th class="detail-col">Período</th>
+																<th>Fecha</th>
+																<th>Depreciación</th>
+																<th>Depreciación Acumulada</th>
+																<th>Valor Libros</th>
+																<th>Depreciado</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>																
+															</tr>															
+														</tbody>
+													</table>
+												</div><!-- /.span -->	
+											</div>
 										</div>								
 									</div>
 								</form>

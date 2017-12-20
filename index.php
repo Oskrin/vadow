@@ -197,6 +197,7 @@
 		<script src="dist/js/ace-elements.min.js"></script>		
 		<script src="dist/js/ace.min.js"></script>		
 		<script src="dist/js/moment.min.js"></script>
+		<script src="dist/js/moment-with-locales.js"></script>
 		<script src="dist/js/wizard.min.js"></script>
 		<script src="dist/js/tree.min.js"></script>
 		<script src="dist/js/jquery.blockUI.js"></script>

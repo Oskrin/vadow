@@ -6,8 +6,9 @@ angular.module('vadowApp')
 		var currDate = d.getDate();
 		var currMonth = d.getMonth() + 1;
 		var currYear = d.getFullYear();
-		var dateStr = currDate + "/" + currMonth + "/" + currYear;
+		var dateStr = currDate + "-" + currMonth + "-" + currYear;
 
+		
 		$scope.recipientsList = [];
 		$scope.recipientsCuentasList = [];
 		$scope.recipientsAdquisicionList = [];
@@ -21,8 +22,7 @@ angular.module('vadowApp')
 		$scope.valueChanged = function(){
 			var temp = ($scope.Activos.txt_5 * 10) / 100;
 			$scope.Activos.txt_10 = temp.toFixed(2);
-		};
-			
+		};			
 		$scope.fecthRecipients = function () {
 			$http({
 		        url: 'data/parametros/usuarios/app.php',
@@ -96,6 +96,7 @@ angular.module('vadowApp')
 		$scope.fecthRecipientsCuentas();
 		$scope.fecthRecipientsAdquisicion();
 		$scope.fecthRecipientsEstado();
+
 
 		$scope.submitForm = function(){
 			if ($scope.formActivos.$valid) {				
@@ -188,7 +189,7 @@ angular.module('vadowApp')
 
 		    $('#txt_9, #txt_4').attr('autocomplete','off');
 
-		    $('#txt_9').ace_spinner({value:0,min:0,max:100,step:1, on_sides: true, icon_up:'ace-icon fa fa-plus bigger-110', icon_down:'ace-icon fa fa-minus bigger-110', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+		    $('#txt_9').ace_spinner({value:1,min:1,max:100,step:1, on_sides: true, icon_up:'ace-icon fa fa-plus bigger-110', icon_down:'ace-icon fa fa-minus bigger-110', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
 		    //cambiar el tamaño para ajustarse al tamaño de la página
 		    $(window).on('resize.jqGrid', function () {
 		        $(grid_selector).jqGrid('setGridWidth', $("#tabActivos").width() - 10);
@@ -197,8 +198,12 @@ angular.module('vadowApp')
 				$('.chosen-select').each(function() {
 					var $this = $(this);
 					$this.next().css({'width': $this.parent().width()});
-				})	
+				});
+				if($(e.target).text() == 'Depreciación'){
+					generarDepreciacion();
+				}
 			});		
+			
 		    //cambiar el tamaño de la barra lateral collapse/expand
 		    var parent_column = $(grid_selector).closest('[class*="col-"]');
 		    $(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
@@ -208,7 +213,7 @@ angular.module('vadowApp')
 		                $(grid_selector).jqGrid('setGridWidth', parent_column.width());
 		            }, 0);
 		        }
-		    });	
+		    });			    
 		    if(!ace.vars['touch']) {			
 				$('.chosen-select').chosen({allow_single_deselect:true}); 
 				//resize the chosen on window resize		
@@ -231,14 +236,52 @@ angular.module('vadowApp')
 			}
 			$('#txt_4').datepicker({
 	            autoclose: true,
-	            format: "dd/mm/yyyy",
+	            format: "dd-mm-yyyy",
 	            todayHighlight: true,
 	            language: 'es',	            
 	            endDate: '1d'
 	        }).datepicker();	
 
 		});	
+		function generarDepreciacion(){
+			if (!$scope.formActivos.$valid) {		
+				bootbox.dialog({
+					message: "Complete todos los campos antes de continuar", 
+					buttons: {
+						"danger" : {
+							"label" : "Aceptar",
+							"className" : "btn-sm btn-danger"
+						}
+					}
+				});		
+				$('#tabActivos a[href="#detalles"]').tab('show');
+			}else{
+				if($scope.buttonText == 'Guardar Datos'){
+					$("#tabla_depreciacion tbody ").html("");
+					var dateStr = moment($scope.Activos.txt_4, "DD-MM-YYYY");							
+					var tiempo = $("#txt_9").val();
+					var costo = $scope.Activos.txt_5;
+					var residual = $scope.Activos.txt_10;					
+					var costoTotal = costo - residual;
+					var depreciacionMes = 0;
+					var depreciacionAcumulada = 0;
+					var valorLibros = costoTotal;
+					costoTotal = costoTotal / tiempo;
+					costoTotal = costoTotal / 12;
+					costoTotal = costoTotal / 30;
+					depreciacionMes = costoTotal * 30;
 
+					tiempo = tiempo * 12;///tiempo en meses
+					for(var i = 0; i < tiempo; i++){
+						depreciacionAcumulada = depreciacionAcumulada + depreciacionMes;
+						valorLibros = valorLibros - depreciacionMes;
+						//dateStr = moment().add('months',(i + 1)).format('DD-MM-YYYY');
+						dateStr = dateStr.add('months',1);						
+						$("#tabla_depreciacion tbody ").append("<tr><td>"+ (i + 1)+"</td><td>"+ dateStr.format('DD-MM-YYYY')+"</td><td>"+depreciacionMes.toFixed(2)+"</td><td>"+depreciacionAcumulada.toFixed(2)+"</td><td>"+valorLibros.toFixed(2)+"</td><td>No</td></tr>");
+					}
+				}
+			}
+		}
 		function undefinedFunction(val){
 			if(val == 'undefined'){
 				console.log(val)
