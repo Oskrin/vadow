@@ -18,6 +18,10 @@ angular.module('vadowApp')
 	            $event.preventDefault();
 	        }
 		};
+		$scope.valueChanged = function(){
+			var temp = ($scope.Activos.txt_5 * 10) / 100;
+			$scope.Activos.txt_10 = temp.toFixed(2);
+		};
 			
 		$scope.fecthRecipients = function () {
 			$http({

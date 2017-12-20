@@ -120,8 +120,16 @@
 											<div class="form-group" ng-class="{ 'has-error' : formActivos.txt_5.$invalid && !formActivos.txt_5.$pristine }">
 												<label for="txt_5" class="col-sm-3 col-xs-12 control-label bolder">Costo:</label>
 											    <div class="col-sm-9 col-xs-12">
-											 	   	<input type="text" class="form-control" name="txt_5" placeholder="Costo" ng-model="Activos.txt_5"  ng-pattern="/^\d+(?:[.,]\d+)?$/" />
+											 	   	<input type="text" class="form-control" name="txt_5" placeholder="Costo" ng-model="Activos.txt_5"  ng-pattern="/^\d+(?:[.,]\d+)?$/" ng-change="valueChanged()" />
 											       	<p style="margin-bottom: -5px;" ng-show="formActivos.txt_5.$invalid && !formActivos.txt_5.$pristine" class="help-block">Este campo es Obligatorio (Números).</p>
+											    </div>
+											</div>
+
+											<div class="form-group" ng-class="{ 'has-error' : formActivos.txt_10.$invalid && !formActivos.txt_10.$pristine }">
+												<label for="txt_10" class="col-sm-3 col-xs-12 control-label bolder">Valor Residual:</label>
+											    <div class="col-sm-9 col-xs-12">
+											 	   	<input type="text" class="form-control" name="txt_10" placeholder="Valor Residual" ng-model="Activos.txt_10"  ng-pattern="/^\d+(?:[.,]\d+)?$/" ng-readonly="true" />
+											       	<p style="margin-bottom: -5px;" ng-show="formActivos.txt_10.$invalid && !formActivos.txt_10.$pristine" class="help-block">Este campo es Obligatorio (Números).</p>
 											    </div>
 											</div>											
 
