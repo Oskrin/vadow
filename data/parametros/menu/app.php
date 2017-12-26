@@ -30,7 +30,7 @@
 			if ($data != 0) {
 				$data = "2"; // NOMBRE REPETIDO
 			} else {
-				$sql = "INSERT INTO menu VALUES ('".$id."','".utf8_encode($_POST['nombre'])."','".utf8_encode($_POST['titulo'])."','".$_POST['icono']."','".$_POST['estado']."','".$fecha."')";
+				$sql = "INSERT INTO menu (nombre,titulo,icono,estado,fecha_creacion)  VALUES('".utf8_encode($_POST['nombre'])."','".utf8_encode($_POST['titulo'])."','".$_POST['icono']."','".$_POST['estado']."','".$fecha."')";
 
 				if($class->consulta($sql)) {
 					$data = "1"; // DATOS AGREGADOS	

@@ -31,7 +31,7 @@
 	            }      	
 			}
 
-			$resp = "INSERT INTO usuarios VALUES ('".$id."','".$_POST['tipoIdentificacion']."','".$_POST['identificacion']."','".$_POST['nombres_completos']."','".$_POST['fijo']."','".$_POST['movil']."','".$_POST['ciudad']."','".$_POST['direccion']."','".$_POST['correo']."','".$_POST['genero']."','".$_POST['cargo']."','".$_POST['usuario']."','".$pass."','".$dirFoto."','0','".$_POST['estado']."','".$fecha."');";
+			$resp = "INSERT INTO usuarios (id_tipo_identificacion, identificacion,nombres_completos,apellidos_completos,telf_fijo,telf_movil,direccion,correo,genero,id_cargo,usuario,password,foto,tipo,estado,fecha_creacion) VALUES ('".$_POST['tipoIdentificacion']."','".$_POST['identificacion']."','".$_POST['nombres_completos']."','".$_POST['fijo']."','".$_POST['movil']."','".$_POST['ciudad']."','".$_POST['direccion']."','".$_POST['correo']."','".$_POST['genero']."','".$_POST['cargo']."','".$_POST['usuario']."','".$pass."','".$dirFoto."','0','".$_POST['estado']."','".$fecha."');";
 
 			if($class->consulta($resp)) {
 				echo 1;	// DATOS GUARDADOS

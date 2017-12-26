@@ -31,7 +31,7 @@
 			if ($data != 0) {
 				$data = "2";
 			} else {
-				$sql = "INSERT INTO submenu  VALUES ('".$id."','".utf8_encode($_POST['nombreRol'])."','".utf8_encode($_POST['titulo'])."','".$_POST['estado']."','".$_POST['nombre_menu']."','".$fecha."');";				
+				$sql = "INSERT INTO submenu (nombre_rol,titulo,estado,id_menu,fecha_creacion) VALUES ('".utf8_encode($_POST['nombreRol'])."','".utf8_encode($_POST['titulo'])."','".$_POST['estado']."','".$_POST['nombre_menu']."','".$fecha."');";				
 	
 				if($class->consulta($sql)) {
 					$data = "1";	

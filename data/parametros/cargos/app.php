@@ -19,7 +19,7 @@
 		if ($data != 0) {
 			$data = "2";///REPETIDO
 		} else {
-			$sql = "INSERT INTO cargos VALUES ('".$id."','".$_POST['nombre_cargo']."','".$_POST['principal']."','".$_POST['observaciones']."','".$_POST['estado']."','".$fecha."');";
+			$sql = "INSERT INTO cargos (nombre_cargo,principal,observaciones,estado,fecha_creacion) VALUES ('".$_POST['nombre_cargo']."','".$_POST['principal']."','".$_POST['observaciones']."','".$_POST['estado']."','".$fecha."');";
 			
 			if($class->consulta($sql)){
 				$data = "1";////DATOS GUARDADOS	

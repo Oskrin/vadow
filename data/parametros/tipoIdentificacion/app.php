@@ -29,7 +29,7 @@
 			if ($data != 0) {
 				$data = "3"; // NOMBRE REPETIDO
 			} else {
-				$sql = "INSERT INTO tipo_identificacion VALUES ('".$id."','".$_POST['codigo']."','".$_POST['nombre']."','0', '".$_POST['estado']."','".$fecha."');";
+				$sql = "INSERT INTO tipo_identificacion (codigo,nombre,tipo,estado,fecha_creacion) VALUES ('".$_POST['codigo']."','".$_POST['nombre']."','0', '".$_POST['estado']."','".$fecha."');";
 
 				if($class->consulta($sql)) {
 					$data = "1"; // DATOS AGREGADOS	
