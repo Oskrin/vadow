@@ -38,8 +38,8 @@
 											    <div class="col-sm-9 col-xs-12">
 											 	   	<input type="text" class="form-control" name="txt_1" placeholder="Código" ng-model="Activos.txt_1" required />
 											       	<p style="margin-bottom: -5px;" ng-show="formActivos.txt_1.$invalid && !formActivos.txt_1.$pristine" class="help-block">Este campo es Obligatorio.</p>
-											       	<input type="hidden" name="txt_id" ng-model="Activos.txt_id"> 
-											 		<input type="hidden" name="txt_verificador" ng-model="Activos.txt_verificador">
+											       	<input type="hidden" id="txt_id" name="txt_id" ng-model="Activos.txt_id"> 
+											 		<input type="hidden" id="txt_verificador" name="txt_verificador" ng-model="Activos.txt_verificador">
 											    </div>											    
 											</div>
 
@@ -74,7 +74,7 @@
 											<div class="form-group">
 												<label for="select_responsable" class="col-sm-3 col-xs-12 control-label bolder">Responsable:</label>
 											    <div class="col-sm-9">
-													<select id="select_responsable" name="select_responsable" tabindex="8" class="chosen-select form-control" data-placeholder="Seleccione un Responsable" chosen ng-model="recipients" ng-options = "recipient.id as recipient.title  for recipient in recipientsList track by recipient.id" required="">
+													<select id="select_responsable" name="select_responsable" tabindex="8" class="chosen-select form-control" data-placeholder="Seleccione un Responsable" chosen ng-model="recipients.selectedOption" ng-options = "recipient.id as recipient.title  for recipient in recipientsList track by recipient.id" required="">
 														<option></option>	
 													</select>												 	   
 											    </div>
@@ -109,12 +109,12 @@
 											<div class="form-group">
 												<div class="col-sm-12 center">
 													<div class="btn-group">
-														<button type="button" class="btn btn-md btn-primary" name="btn_3"> << </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_4"> < </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_1" ng-disabled="formActivos.$invalid"> {{buttonText}} </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="principio()" name="btn_3"> << </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="atras()" name="btn_4"> < </button>
+														<button type="submit" class="btn btn-md btn-primary" name="btn_1" ng-disabled="formActivos.$invalid"> {{buttonText}} </button>
 														<button type="button" class="btn btn-md btn-primary " name="btn_2" ng-click="ventanaBusqueda()"> Buscar </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_5"> > </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_6"> >> </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="adelante()" name="btn_5"> > </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="final()" name = "btn_6"> >> </button>
 													</div>
 												</div>
 											</div>											
@@ -187,12 +187,12 @@
 											<div class="form-group">
 												<div class="col-sm-12 center">
 													<div class="btn-group">
-														<button type="button" class="btn btn-md btn-primary" name="btn_3"> << </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_4"> < </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_1" ng-disabled="formActivos.$invalid"> {{buttonText}} </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="principio()" name="btn_3"> << </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="atras()" name="btn_4"> < </button>
+														<button type="submit" class="btn btn-md btn-primary" name="btn_1" ng-disabled="formActivos.$invalid"> {{buttonText}} </button>
 														<button type="button" class="btn btn-md btn-primary " name="btn_2" ng-click="ventanaBusqueda()"> Buscar </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_5"> > </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_6"> >> </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="adelante()" name="btn_5"> > </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="final()" name = "btn_6"> >> </button>
 													</div>
 												</div>
 											</div>							
@@ -221,12 +221,12 @@
 											<div class="form-group">
 												<div class="col-sm-12 center">
 													<div class="btn-group">
-														<button type="button" class="btn btn-md btn-primary" name="btn_3"> << </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_4"> < </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_1" ng-disabled="formActivos.$invalid"> {{buttonText}} </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="principio()" name="btn_3"> << </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="atras()" name="btn_4"> < </button>
+														<button type="submit" class="btn btn-md btn-primary" name="btn_1" ng-disabled="formActivos.$invalid"> {{buttonText}} </button>
 														<button type="button" class="btn btn-md btn-primary " name="btn_2" ng-click="ventanaBusqueda()"> Buscar </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_5"> > </button>
-														<button type="button" class="btn btn-md btn-primary" name="btn_6"> >> </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="adelante()" name="btn_5"> > </button>
+														<button type="button" class="btn btn-md btn-primary" ng-click="final()" name = "btn_6"> >> </button>
 													</div>
 												</div>
 											</div>	

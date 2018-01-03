@@ -6,8 +6,7 @@
 	$fecha = $class->fecha_hora();	
 	$data = 0;
 
-	if ($_POST['tipo'] == "Guardar Datos") {
-		$id = $class->idz();	
+	if ($_POST['tipo'] == "Guardar Datos") {	
 		$sql = "SELECT count(*)count FROM activo_fijo WHERE codigo = UPPER('".$_POST['codigo']."')";
 		$sql = $class->consulta($sql);		
 		while ($row = $class->fetch_array($sql)) {
@@ -25,11 +24,8 @@
 				while ($row_id = $class->fetch_array($sql_id)) {
 					$id_activo = $row_id[0];
 				}
-
-				///proceso de depreciacion
-				//$fecha_2 = $_POST['fechaAdquisicion'];
-				$fecha_2 = strtotime($_POST['fechaAdquisicion']);
-				//$fecha_2 = date("d-m-Y",$_POST['fechaAdquisicion']);
+				///proceso de depreciacion			
+				$fecha_2 = strtotime($_POST['fechaAdquisicion']);				
 				$tiempo = $_POST['vidaUtil'];
 				$costo = $_POST['costo'];
 				$residual = $_POST['residual'];
@@ -63,19 +59,21 @@
 		}		
 	}else{
 		if ($_POST['tipo'] == "Busqueda") {
-			$data = array();
-			$activo = array();
+			$data = array();			
+			$temp = array();
 			$sql = "select id,codigo,descripcion,fecha_adquisicion,costo,valor_residual from activo_fijo";
 			$sql = $class->consulta($sql);		
 			while ($row = $class->fetch_array($sql)) {
+				$activo = array();
 				$activo[] = $row[0];
 				$activo[] = $row[1];
 				$activo[] = $row[2];
 				$activo[] = $row[3];
 				$activo[] = $row[4];
 				$activo[] = $row[5];
-			}
-			$data = array("data"=>array($activo));
+				$temp[] = $activo;
+			}			
+			$data = array("data"=> $temp);
 			echo json_encode($data);
 		}else{
 			if ($_POST['tipo'] == "Cargar Datos") {
@@ -106,11 +104,108 @@
 				$verificador = numeroVerificador($data[18]);
 				$sql = "update activo_fijo set numero_verificador = '".$verificador."'";
 				if($class->consulta($sql)){
-					$data[] = $verificador;
+					$data[18] = $verificador;
 					echo json_encode($data);
+				}				
+			}else{
+				if ($_POST['tipo'] == "Modificar Datos") {
+					$data = 0;
+					$verificador = 0;
+					$resp = "SELECT id FROM activo_fijo WHERE codigo = '".$_POST['codigo']."' AND NOT id = '".$_POST['id']."'";
+					$resp = $class->consulta($resp);	
+					if($class->num_rows($resp) > 0) {		
+						$data = 2; // REPETIDO	
+					} else {
+						$sql = "select numero_verificador from activo_fijo where id = '".$_POST['id']."'";
+						$sql = $class->consulta($sql);		
+						while ($row = $class->fetch_array($sql)) {
+							$verificador = $row[0];
+						}
+						if($verificador == $_POST['verificador']){
+							$sql = "UPDATE activo_fijo set codigo = '".$_POST['codigo']."',descripcion = '".$_POST['descripcion']."',responsable = '".$_POST['responsable']."',id_cuenta = '".$_POST['cuenta']."', id_adquisicion = '".$_POST['formaAdquisicion']."', id_estado_bien = '".$_POST['estadoBien']."', numero_serie = '".$_POST['serie']."', modelo = '".$_POST['modelo']."', marca = '".$_POST['marca']."', estado = '".$_POST['estado']."',nombre_activo = '".$_POST['nombreActivo']."',id_bodega = '".$_POST['bodega']."',numero_verificador = '".$_POST['verificador']."' where id = '".$_POST['id']."'";	
+							if($class->consulta($sql)) {		
+								$data = 1; // ACTUALIZADO	
+							}else{
+								$data = 4; //error
+							}
+						}else{
+							$data = 3;///error verificador
+						}
+					}
+					echo $data;
+				}else{
+					if ($_POST['tipo'] == "cargarDepreciacion") {
+						$data = array();						
+						$sql = "select fecha, depreciacion,depre_acumulada,valor_libros,estado::integer from depreciacion where id_activo = '".$_POST['id']."'";
+						$sql = $class->consulta($sql);		
+						while ($row = $class->fetch_array($sql)) {
+							$temp = array();
+							$temp[] = $row[0];
+							$temp[] = $row[1];
+							$temp[] = $row[2];
+							$temp[] = $row[3];
+							$temp[] = $row[4];
+							$data[] = $temp;
+						}
+						echo json_encode($data);
+					}else{
+						if ($_POST['tipo'] == "atras") {
+							$data = 0;
+							if($_POST['id'] == 0){
+								$sql = "select id from activo_fijo order by id desc limit 1";	
+								$sql = $class->consulta($sql);		
+								while ($row = $class->fetch_array($sql)) {
+									$data = $row[0];
+								}
+							}else{
+								$sql = "select id from activo_fijo where id < '".$_POST['id']."' order by id desc limit 1";
+								$sql = $class->consulta($sql);		
+								while ($row = $class->fetch_array($sql)) {
+									$data = $row[0];
+								}
+							}							
+							echo $data;
+						}else{
+							if ($_POST['tipo'] == "principio") {
+								$data = 0;								
+								$sql = "select id from activo_fijo order by id asc limit 1";	
+								$sql = $class->consulta($sql);		
+								while ($row = $class->fetch_array($sql)) {
+									$data = $row[0];
+								}														
+								echo $data;
+							}else{
+								if ($_POST['tipo'] == "adelante") {
+									$data = 0;
+									if($_POST['id'] == 0){
+										$sql = "select id from activo_fijo order by id asc limit 1";	
+										$sql = $class->consulta($sql);		
+										while ($row = $class->fetch_array($sql)) {
+											$data = $row[0];
+										}
+									}else{
+										$sql = "select id from activo_fijo where id >'".$_POST['id']."' order by id asc limit 1";
+										$sql = $class->consulta($sql);		
+										while ($row = $class->fetch_array($sql)) {
+											$data = $row[0];
+										}
+									}							
+									echo $data;
+								}else{
+									if ($_POST['tipo'] == "final") {
+										$data = 0;								
+										$sql = "select id from activo_fijo order by id desc limit 1";	
+										$sql = $class->consulta($sql);		
+										while ($row = $class->fetch_array($sql)) {
+											$data = $row[0];
+										}														
+										echo $data;
+									}
+								}	
+							}
+						}
+					}	
 				}
-
-				
 			}	
 		}						
 		

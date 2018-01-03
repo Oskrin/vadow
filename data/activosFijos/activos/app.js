@@ -102,7 +102,7 @@ angular.module('vadowApp')
 		    	}			    	
 		    });			
 		}
-		function getData(id){			
+		function getData(id){						
 			$http({
 		        url: 'data/activosFijos/activos/app.php',
 		        method: "POST",
@@ -113,7 +113,7 @@ angular.module('vadowApp')
 		    //console.log(response)			        	
 	    		if(response['statusText'] == 'OK'){
 	    			$scope.Activos = {
-			    		txt_0 : response['data'][0],			    	
+			    		txt_id : response['data'][0],			    	
 			    		txt_1 : response['data'][1],	
 			    		txt_2 : response['data'][15],	
 			    		txt_3 : response['data'][2],	
@@ -123,11 +123,12 @@ angular.module('vadowApp')
 			    		txt_7 : response['data'][10],		
 			    		txt_8 : response['data'][11],				    		
 			    		txt_10 : response['data'][17],	
-			    		txt_verificador : response['data'][18],			    		
-			    	}	
+			    		txt_9 : response['data'][12],	
+			    		txt_verificador : response['data'][18],					    					    		
+			    	}
 			    	$("#txt_9").val(response['data'][12]);
 			    	$("#select_responsable").val(response['data'][4]);
-	            	$("#select_responsable").trigger("chosen:updated");
+	            	$("#select_responsable").trigger("chosen:updated");	            	
 	            	$("#select_cuenta").val(response['data'][5]);
 	            	$("#select_cuenta").trigger("chosen:updated");
 	            	$("#select_adquisicion").val(response['data'][6]);
@@ -137,11 +138,14 @@ angular.module('vadowApp')
 	            	$("#select_bodega").val(response['data'][16]);
 	            	$("#select_bodega").trigger("chosen:updated");
 	            	$("#select_estado").val(response['data'][13]);
-	            	$("#select_estado").trigger("chosen:updated");
-		            $scope.buttonText = "Modificar Datos"; 
-		            $('#modal-table').modal('hide');		            
-		            console.log($scope.formActivos)
-		            	            
+	            	$("#select_estado").trigger("chosen:updated");		            
+		            $('#modal-table').modal('hide');		     
+		            $scope.buttonText = "Modificar Datos";     		            		            
+			    	$scope.formActivos.select_responsable.$setViewValue(response['data'][4]);
+			    	$scope.formActivos.select_cuenta.$setViewValue(response['data'][5]);
+			    	$scope.formActivos.select_adquisicion.$setViewValue(response['data'][6]);
+			    	$scope.formActivos.select_estadoBien.$setViewValue(response['data'][7]);
+			    	$scope.formActivos.select_bodega.$setViewValue(response['data'][16]); 
 	    		}else{
 	    			bootbox.dialog({
 						message: "Error al Cargar los datos. Vuelva a Interntarlo", 
@@ -153,19 +157,16 @@ angular.module('vadowApp')
 						}
 					});
 	    		}
-		    });		
-			
+		    });	
 		}
-
 		$scope.fecthRecipients();
 		$scope.fecthRecipientsCuentas();
 		$scope.fecthRecipientsAdquisicion();
 		$scope.fecthRecipientsEstado();
 		$scope.fecthRecipientsBodegas();
-
 		$scope.submitForm = function(){
-			if ($scope.formActivos.$valid) {	
-				//console.log($scope.Activos)			
+			//console.log($scope.formActivos)
+			if ($scope.formActivos.$valid) {			
 			 	var data = $.param({
                 	codigo: undefinedFunction($scope.Activos.txt_1),
                 	nombreActivo: undefinedFunction($scope.Activos.txt_2),
@@ -181,11 +182,12 @@ angular.module('vadowApp')
                 	modelo: undefinedFunction($scope.Activos.txt_7),
                 	marca: undefinedFunction($scope.Activos.txt_8),
                 	vidaUtil: $("#txt_9").val(),
+                	id: undefinedFunction($scope.Activos.txt_id),
+                	verificador: undefinedFunction($scope.Activos.txt_verificador),
                 	estado: $("#select_estado").val(),
                 	residual : $scope.Activos.txt_10,
 					tipo: $scope.buttonText
-            	});	
-            	
+            	});	            	
 				$http({
 			        url: 'data/activosFijos/activos/app.php',
 			        method: "POST",
@@ -219,6 +221,8 @@ angular.module('vadowApp')
 							}
 						});
 						$("#tabla_depreciacion tbody ").html("");
+						
+						$('#activos-table').DataTable().ajax.reload()
 			    	}
 			    	else{
 			    		if(response.data == 2){	
@@ -232,15 +236,27 @@ angular.module('vadowApp')
 								}
 							});
 				    	}else{
-				    		bootbox.dialog({
-								message: "Error! Al intentar guardar los Datos. Comuniquese con el Administrador", 
-								buttons: {
-									"danger" : {
-										"label" : "Aceptar",
-										"className" : "btn-sm btn-danger"
+				    		if(response.data == 3){	
+				    			bootbox.dialog({
+									message: "Error! El registro se encuentra siendo Modificado por Otro Usuario", 
+									buttons: {
+										"success" : {
+											"label" : "Aceptar",
+											"className" : "btn-sm btn-warning"
+										}
 									}
-								}
-							});
+								});
+				    		}else{
+					    		bootbox.dialog({
+									message: "Error! Al intentar guardar los Datos. Comuniquese con el Administrador", 
+									buttons: {
+										"danger" : {
+											"label" : "Aceptar",
+											"className" : "btn-sm btn-danger"
+										}
+									}
+								});
+				    		}
 			    		}
 			    	}
 			    }, 
@@ -251,9 +267,120 @@ angular.module('vadowApp')
 				
 			}
 		};
-
 		$scope.ventanaBusqueda = function(){
 			$('#modal-table').modal('show');		
+		}
+		$scope.atras = function(){
+			var id = 0;
+			if($scope.formActivos.txt_id.$viewValue){
+				id = $scope.formActivos.txt_id.$viewValue;
+			}else{
+				id = 0;
+			}
+			$http({
+		        url: 'data/activosFijos/activos/app.php',
+		        method: "POST",
+		        data: "tipo=" + "atras"+"&id="+id,
+		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+		    })
+		    .then(function(response) {			    
+	    		if(response['statusText'] == 'OK'){
+	    			if(response['data'] > 0){	    			
+	    				getData(response['data']);
+	    			}
+	    		}else{
+	    			bootbox.dialog({
+						message: "Error al Cargar los datos. Vuelva a Interntarlo", 
+						buttons: {
+							"success" : {
+								"label" : "Aceptar",
+								"className" : "btn-sm btn-danger"
+							}
+						}
+					});
+	    		}
+		    });	
+		}
+		$scope.principio = function(){			
+			$http({
+		        url: 'data/activosFijos/activos/app.php',
+		        method: "POST",
+		        data: "tipo=" + "principio",
+		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+		    })
+		    .then(function(response) {			    
+	    		if(response['statusText'] == 'OK'){
+	    			if(response['data'] > 0){	    			
+	    				getData(response['data']);
+	    			}
+	    		}else{
+	    			bootbox.dialog({
+						message: "Error al Cargar los datos. Vuelva a Interntarlo", 
+						buttons: {
+							"success" : {
+								"label" : "Aceptar",
+								"className" : "btn-sm btn-danger"
+							}
+						}
+					});
+	    		}
+		    });	
+		}
+		$scope.adelante = function(){
+			var id = 0;
+			if($scope.formActivos.txt_id.$viewValue){
+				id = $scope.formActivos.txt_id.$viewValue;
+			}else{
+				id = 0;
+			}
+			$http({
+		        url: 'data/activosFijos/activos/app.php',
+		        method: "POST",
+		        data: "tipo=" + "adelante"+"&id="+id,
+		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+		    })
+		    .then(function(response) {			    
+	    		if(response['statusText'] == 'OK'){
+	    			if(response['data'] > 0){	    			
+	    				getData(response['data']);
+	    			}
+	    		}else{
+	    			bootbox.dialog({
+						message: "Error al Cargar los datos. Vuelva a Interntarlo", 
+						buttons: {
+							"success" : {
+								"label" : "Aceptar",
+								"className" : "btn-sm btn-danger"
+							}
+						}
+					});
+	    		}
+		    });	
+		}
+		$scope.final = function(){			
+			$http({
+		        url: 'data/activosFijos/activos/app.php',
+		        method: "POST",
+		        data: "tipo=" + "final",
+		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+		    })
+		    .then(function(response) {			    
+	    		if(response['statusText'] == 'OK'){
+	    			if(response['data'] > 0){	    			
+	    				getData(response['data']);
+	    			}
+	    		}else{
+	    			bootbox.dialog({
+						message: "Error al Cargar los datos. Vuelva a Interntarlo", 
+						buttons: {
+							"success" : {
+								"label" : "Aceptar",
+								"className" : "btn-sm btn-danger"
+							}
+						}
+					});
+	    		}
+		    });	
 		}
 		jQuery(function($) {			
 			$("#tabActivos").click(function(event) {
@@ -261,9 +388,7 @@ angular.module('vadowApp')
 			});
 			var grid_selector = "#table";
 		    var pager_selector = "#pager";
-
 		    $('#txt_9, #txt_4').attr('autocomplete','off');
-
 		    $('#txt_9').ace_spinner({value:1,min:1,max:100,step:1, on_sides: true, icon_up:'ace-icon fa fa-plus bigger-110', icon_down:'ace-icon fa fa-minus bigger-110', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
 		    //cambiar el tamaño para ajustarse al tamaño de la página
 		    $(window).on('resize.jqGrid', function () {
@@ -515,7 +640,7 @@ angular.module('vadowApp')
 
 			$('#activos-table tbody').on('dblclick', 'tr', function (e) {				
 				var data = myTable.row( this ).data();
-				getData(data[0]);        		
+				getData(data[0]);
 				
 			} );	
 		});	
@@ -554,6 +679,41 @@ angular.module('vadowApp')
 						//dateStr = moment().add('months',(i + 1)).format('DD-MM-YYYY');
 						dateStr = dateStr.add('months',1);						
 						$("#tabla_depreciacion tbody ").append("<tr><td>"+ (i + 1)+"</td><td>"+ dateStr.format('DD-MM-YYYY')+"</td><td>"+depreciacionMes.toFixed(2)+"</td><td>"+depreciacionAcumulada.toFixed(2)+"</td><td>"+valorLibros.toFixed(2)+"</td><td>No</td></tr>");
+					}
+				}else{
+					if($scope.buttonText == 'Modificar Datos'){
+						$("#tabla_depreciacion tbody ").html("");
+						$http({
+					        url: 'data/activosFijos/activos/app.php',
+					        method: "POST",
+					        data: "tipo=" + "cargarDepreciacion"+"&id="+$scope.Activos.txt_id,
+					        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+					    })
+					    .then(function(response) {	
+					    console.log(response)			        	
+				    		if(response['statusText'] == 'OK'){
+				    			for(var i = 0; i < response['data'].length; i++){									
+				    				var estado = '';
+				    				if(response['data'][0][4] == 0){
+				    					estado = 'No';
+				    				}else{
+				    					estado = 'Si';
+				    				}
+
+									$("#tabla_depreciacion tbody ").append("<tr><td>"+ (i + 1) +"</td><td>"+ response['data'][i][0]+"</td><td>"+response['data'][i][1]+"</td><td>"+response['data'][i][2]+"</td><td>"+response['data'][i][3]+"</td><td>"+estado+"</td></tr>");
+								}
+				    		}else{
+				    			bootbox.dialog({
+									message: "Error al Cargar los datos. Vuelva a Interntarlo", 
+									buttons: {
+										"success" : {
+											"label" : "Aceptar",
+											"className" : "btn-sm btn-danger"
+										}
+									}
+								});
+				    		}
+					    });		
 					}
 				}
 			}
