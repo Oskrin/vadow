@@ -29,7 +29,7 @@
 
 		$resultado = $class->consulta("
 										SELECT * FROM usuarios U  
-										where U.usuario = '".$_POST['txt_nombre']."' and clave = md5('".$_POST['txt_clave']."')");
+										where U.usuario = '".$_POST['txt_nombre']."' and password = md5('".$_POST['txt_clave']."')");
 		
 
 		if($class->num_rows($resultado) == 1) {
