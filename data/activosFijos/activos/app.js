@@ -1,14 +1,7 @@
 angular.module('vadowApp')	 			
 	.controller('activosController', function ($scope, $route, $http) {	
 		$scope.$route = $route;
-		$scope.buttonText = "Guardar Datos";
-		var d = new Date();
-		var currDate = d.getDate();
-		var currMonth = d.getMonth() + 1;
-		var currYear = d.getFullYear();
-		var dateStr = currDate + "-" + currMonth + "-" + currYear;
-
-		
+		$scope.buttonText = "Guardar Datos";				
 		$scope.recipientsList = [];
 		$scope.recipientsCuentasList = [];
 		$scope.recipientsAdquisicionList = [];
@@ -146,9 +139,9 @@ angular.module('vadowApp')
 	            	$("#select_estado").val(response['data'][13]);
 	            	$("#select_estado").trigger("chosen:updated");
 		            $scope.buttonText = "Modificar Datos"; 
-		            $('#modal-table').modal('hide');
-		            $scope.formActivos.$setPristine();	
-		            //$scope.$apply();		            
+		            $('#modal-table').modal('hide');		            
+		            console.log($scope.formActivos)
+		            	            
 	    		}else{
 	    			bootbox.dialog({
 						message: "Error al Cargar los datos. Vuelva a Interntarlo", 
@@ -567,7 +560,7 @@ angular.module('vadowApp')
 		}
 		function undefinedFunction(val){
 			if(val == 'undefined'){
-				console.log(val)
+				//console.log(val)
 				return val = '';
 			}else{
 				return val;
