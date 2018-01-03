@@ -38,6 +38,8 @@
 											    <div class="col-sm-9 col-xs-12">
 											 	   	<input type="text" class="form-control" name="txt_1" placeholder="Código" ng-model="Activos.txt_1" required />
 											       	<p style="margin-bottom: -5px;" ng-show="formActivos.txt_1.$invalid && !formActivos.txt_1.$pristine" class="help-block">Este campo es Obligatorio.</p>
+											       	<input type="hidden" name="txt_id" ng-model="Activos.txt_id"> 
+											 		<input type="hidden" name="txt_verificador" ng-model="Activos.txt_verificador">
 											    </div>											    
 											</div>
 
@@ -104,20 +106,18 @@
 													</select>												 	   
 											    </div>
 											</div>
-
 											<div class="form-group">
-												<label for="" class="col-sm-3 col-xs-12 control-label bolder"></label>
-											    <div class="col-sm-3">
-													<button type="submit" id="btn_1" name="btn_1" class="btn btn-sm btn-primary" ng-disabled="formActivos.$invalid"><i class="ace-icon fa fa-save"></i>									
-														{{buttonText}}														
-													</button>
-											    </div>
-											    <div class="col-sm-3">
-													<button type="button" id="btn_2" name="btn_2" class="btn btn-sm btn-success" ><i class="ace-icon fa fa-search"></i>									
-														Buscar Activo														
-													</button>
-											    </div>
-											</div>							
+												<div class="col-sm-12 center">
+													<div class="btn-group">
+														<button type="button" class="btn btn-md btn-primary" name="btn_3"> << </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_4"> < </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_1" ng-disabled="formActivos.$invalid"> {{buttonText}} </button>
+														<button type="button" class="btn btn-md btn-primary " name="btn_2" ng-click="ventanaBusqueda()"> Buscar </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_5"> > </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_6"> >> </button>
+													</div>
+												</div>
+											</div>											
 										</div>	
 										<div id="adicionales" class="tab-pane">			
 																		
@@ -166,6 +166,15 @@
 											</div>	
 
 											<div class="form-group">
+												<label for="select_bodega" class="col-sm-3 col-xs-12 control-label bolder">Bodega:</label>
+											    <div class="col-sm-9">											    	
+													<select id="select_bodega" name="select_bodega" tabindex="8" class="chosen-select form-control" data-placeholder="Seleccione una Bodega" chosen ng-model="recipientsBodegas" ng-options = "recipientBodegas.id as recipientBodegas.title  for recipientBodegas in recipientsBodegasList track by recipientBodegas.id" required="">
+														<option></option>	
+													</select>												 	   
+											    </div>
+											</div>
+
+											<div class="form-group">
 												<label for="select_estado" class="col-sm-3 col-xs-12 control-label bolder">Estado:</label>
 											    <div class="col-sm-9">
 													<select id="select_estado" name="select_estado" tabindex="8" class="chosen-select form-control" data-placeholder="Estado">	
@@ -176,17 +185,16 @@
 											</div>
 
 											<div class="form-group">
-												<label for="" class="col-sm-3 col-xs-12 control-label bolder"></label>
-											    <div class="col-sm-3">
-													<button type="submit" id="btn_1" name="btn_1" class="btn btn-sm btn-primary" ng-disabled="formActivos.$invalid"><i class="ace-icon fa fa-save"></i>									
-														{{buttonText}}														
-													</button>
-											    </div>
-											    <div class="col-sm-3">
-													<button type="button" id="btn_2" name="btn_2" class="btn btn-sm btn-success" ><i class="ace-icon fa fa-search"></i>									
-														Buscar Activo														
-													</button>
-											    </div>
+												<div class="col-sm-12 center">
+													<div class="btn-group">
+														<button type="button" class="btn btn-md btn-primary" name="btn_3"> << </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_4"> < </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_1" ng-disabled="formActivos.$invalid"> {{buttonText}} </button>
+														<button type="button" class="btn btn-md btn-primary " name="btn_2" ng-click="ventanaBusqueda()"> Buscar </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_5"> > </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_6"> >> </button>
+													</div>
+												</div>
 											</div>							
 										</div>		
 										<div id="depreciacion" class="tab-pane">
@@ -210,6 +218,18 @@
 													</table>
 												</div><!-- /.span -->	
 											</div>
+											<div class="form-group">
+												<div class="col-sm-12 center">
+													<div class="btn-group">
+														<button type="button" class="btn btn-md btn-primary" name="btn_3"> << </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_4"> < </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_1" ng-disabled="formActivos.$invalid"> {{buttonText}} </button>
+														<button type="button" class="btn btn-md btn-primary " name="btn_2" ng-click="ventanaBusqueda()"> Buscar </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_5"> > </button>
+														<button type="button" class="btn btn-md btn-primary" name="btn_6"> >> </button>
+													</div>
+												</div>
+											</div>	
 										</div>								
 									</div>
 								</form>
@@ -220,4 +240,43 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="modal fade" id="modal-table" role="dialog" aria-labelledby="myLargeModalLabel" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header no-padding">
+				<div class="table-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						<span class="white">&times;</span>
+					</button>
+					Activos Fijos
+				</div>
+			</div>
+
+			<div class="modal-body no-padding">
+				<div class="row">
+					<div class="col-xs-12">	
+						<div>
+							<table id="activos-table" class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<td class="hidden">Id</td>
+										<th class="center">Código</th>
+										<th class="center">Activo</th>
+										<th class="center">Fecha Adquisición</th>
+										<th class="center">Costo</th>
+										<th class="center">Valor Residual</th>										
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
 </div>

@@ -204,14 +204,26 @@
 		<script src="dist/js/lockr.min.js"></script>
 		<script src="dist/js/bootstrap-datepicker.min.js"></script>
 		<script src="dist/js/spinbox.min.js"></script>
+		
+		<script src="dist/js/jquery.dataTables.min.js"></script>
+		<script src="dist/js/jquery.dataTables.bootstrap.min.js"></script>
+		<script src="dist/js/dataTables.buttons.min.js"></script>
+		<script src="dist/js/buttons.flash.min.js"></script>
+		<script src="dist/js/buttons.html5.min.js"></script>
+		<script src="dist/js/buttons.print.min.js"></script>
+		<script src="dist/js/buttons.colVis.min.js"></script>
+		<script src="dist/js/dataTables.select.min.js"></script>
 		<!--[if lte IE 8]>
 		  <script src="dist/js/excanvas.min.js"></script>
 		<![endif]-->
 		
 		<style type="text/css">
-		.ui-jqdialog-content .form-view-data {
-	        white-space: normal !important;
-	    }
+			.ui-jqdialog-content .form-view-data {
+		        white-space: normal !important;
+		    }
+		    .dataTables_info {
+		        font-size: 13px !important;
+		    }
 			#tablas .table-bordered>tbody>tr>td {
 			    padding: 6px !important;
 			}
