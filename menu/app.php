@@ -12,7 +12,7 @@
 		inner join submenu R on CR.id_submenu = R.id
 		inner join menu M on M.id = R.id_menu
 		where CR.id_cargo = '".$id."' and CR.estado = '1'
-		group by M.id, R.id_menu";
+		group by M.id, R.id_menu, M.nombre, M.titulo, M.icono";
 		
 		$sql = $class->consulta($sql);
 		$menu = "";
