@@ -100,7 +100,8 @@
       
     // generamos fecha
     public function fecha() {
-      $fecha = date("Y-m-d");
+      date_default_timezone_set('America/Guayaquil');
+      $fecha = date("d-m-Y");
       return $fecha;
     }
     // fin 
